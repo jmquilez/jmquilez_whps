@@ -1,0 +1,49 @@
+
+{{> header }}
+<div class="bodys"
+    style="background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url({{banner}}); margin-top: 0px; position: relative; height: 100%; width: 100%; margin-left: 0px; margin-bottom: 0px; padding: 1px; margin-top: -270px">
+    <!--{{#if signUps}}
+    <div style="color: green; width: 600px; height: 50px; margin: auto;">{{signUps}}</div>
+
+    {{/if}}-->
+    <form id="formulaire" action="/signup" method="POST">
+
+        <div class="csrp">
+            <h2 style="text-align: center; font-family: 'Exo 2', sans-serif; font-size: xx-large;">SIGN UP</h2>
+            <!--<div style="height: 160px; border-radius: 100%; margin-left: 150px; margin-right: 150px; position: relative">-->
+            <div class="circular--portrait">
+                <img src={{mongoDB}} alt="" srcset=""
+                    style="height: 100%; width: 100%; position: relative; object-fit:cover; margin-right: auto; margin-left:auto;">
+            </div>
+            <!--</div>-->
+            {{#each data}}
+            <label style="margin-top: 25px;" id="label" for={{this.z}}>{{this.x}}</label>
+            <input id={{this.z}} type={{this.y}} placeholder={{this.x}} name={{this.z}}>
+            {{/each}}
+
+
+            <label for="sex" style="margin-left: 30px; margin-top: 30px;">Sexo</label>
+
+            <div class="wrapper" style="margin-bottom: 10px;">
+                {{#each sex}}
+                <label style="margin-top: 25px;" id={{this.z}} class="Radio" for={{this.z}}>
+                    <input class="Radio-Input" type="radio" id="sex" name="sex" value={{this.z}} />
+                    {{this.nam}}
+                </label>
+                {{/each}}
+            </div>
+
+
+            <label style="margin-top: 25px; margin-left: 30px;" for="dating">Fecha</label>
+            <input style="margin-top: 25px;" name="date" type="date" data-date-inline-picker="true" id="dating" />
+            <label style="margin-top: 30px; margin-left: 30px;" for="corl">Color favorito</label>
+            <!--<div class="select">-->
+
+            <input type="color" id="corl" name="color">
+            <!--</div>-->
+
+            <input type="submit" value="Submit" onclick="redirect()">
+
+        </div>
+    </form>
+</div>

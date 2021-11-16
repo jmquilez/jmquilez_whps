@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2&display=swap');
+
+body, html {
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 0px;
+}
+
+#formulaire {
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+    border-radius: 5px;
+    border-width: 0px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: large;
+    width: 29vw;
+    margin: auto;
+    background: rgb(28,177,168);
+    background: linear-gradient(90deg, rgba(28,177,168,1) 0%, rgba(50,213,69,1) 35%, rgba(0,255,188,1) 100%);
+    margin-top: 35px;
+    margin-bottom: 35px;
+    -webkit-margin-collapse: separate;
+}
+
+input[type='text'] {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-right: 30px;
+    height: 40px;
+    margin-top: 20px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: 30px;
+    padding: 1px;
+}
+
+input[type="text"]:hover {
+    background-color: rgb(125, 250, 131);
+}
+
+input[type="email"]:hover {
+    background-color: rgb(125, 250, 131);
+}
+
+input[type="password"]:hover {
+    background-color: rgb(125, 250, 131);
+}
+
+input[type="radio"]:hover {
+    background-color: rgb(125, 250, 131);
+}
+
+input[type="date"]:hover {
+    background-color: rgb(125, 250, 131);
+    color: white
+}
+
+input[type="color"]:hover {
+    background-color: rgb(125, 250, 131);
+}
+
+input[type="submit"]:hover {
+    background-color: rgb(125, 250, 131);
+    color: white;
+}
+
+input[type="text"]:hover::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-family: 'Exo 2', sans-serif;
+    color: white
+} 
+
+input[type="email"]:hover::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-family: 'Exo 2', sans-serif;
+    color: white
+} 
+
+input[type="password"]:hover::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-family: 'Exo 2', sans-serif;
+    color: white
+}
+
+input[type="text"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-family: 'Exo 2', sans-serif;
+    color: rgb(74, 241, 82);
+} 
+
+input[type="email"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-family: 'Exo 2', sans-serif;
+    color: rgb(74, 241, 82);
+} 
+
+input[type="password"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-family: 'Exo 2', sans-serif;
+    color: rgb(74, 241, 82);
+}
+
+.circular--portrait {
+    position: relative;
+    width: 10vw;
+    height: 10vw;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.header {
+    position: relative;
+    height: 50vh;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 0vh;
+}
+
+input[type='email'] {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-right: 30px;
+    height: 40px;
+    margin-top: 20px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: 30px;
+}
+
+input[type='password'] {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-right: 30px;
+    height: 40px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: 30px;
+}
+
+input[type="radio"] {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-right: 30px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: auto;
+    position: relative;
+    /*height: 40px;
+    text-indent: 10px;*/
+    margin-left: 30px;
+}
+
+input[type='date'] {
+    margin-left: 30px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-right: 30px;
+    border-radius: 5px;
+    border-width: 0px;
+    height: 40px;
+    text-indent: 3px;
+    border-radius: 5px;
+    border-width: 0px;
+    color: rgb(74, 241, 82);
+}
+
+input[type='submit'] {
+    margin-left: 30px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: 30px;
+    border-radius: 5px;
+    border-width: 0px;
+    background-color: white;
+    height: 40px;
+    font-family: 'Exo 2', sans-serif;
+    border-radius: 5px;
+    color: rgb(74, 241, 82);
+}
+
+input[type='color'] {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-right: 30px;
+    height: 40px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    right: 90px;
+    width: 20vw;
+    margin-left: 4.5vw;
+    -webkit-appearance: none;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+	
+}
+input[type="color"]::-webkit-color-swatch {
+	
+}
+
+.select {
+    width: 600px;
+    margin-right: 30px;
+}
+
+.bodys {
+    
+}
+
+.csrp {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border-width: 0px;
+}
+
+.csrp:nth-child(1) {
+    margin-top: 10px;
+}
+
+#label {
+    margin-left: 30px;
+    border-radius: 5px;
+    border-width: 0px;
+}
+
+input {
+    margin-left: 30px;
+    border-radius: 5px;
+    border-width: 0px;
+}
+
+/*#input {
+    margin-left: 30px;
+    border-radius: 5px;
+    border-width: 0px;
+}*/
+
+.Radio {
+    margin-left: 30px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-bottom: 10px;
+}
+
+#therad {
+    margin-left: 30px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-bottom: 10px;
+}
+
+.Radio-Input {
+    
+}

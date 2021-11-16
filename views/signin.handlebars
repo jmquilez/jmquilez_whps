@@ -1,0 +1,23 @@
+{{> header }}
+<div class="bodys" style="background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url({{banner}}); margin-top: 0px; position: relative; height: 100%; width: 100%; margin-left: 0px; margin-bottom: -35px; padding: 1px; margin-top: -270px;">
+    
+    <form id="formulaire" action="/signin" method="POST">
+    
+    <div class="csrp">
+        <h2 style="text-align: center; font-family: 'Exo 2', sans-serif; font-size: xx-large;">SIGN IN</h2>
+        <!--<div style="height: 160px; border-radius: 100%; margin-left: 150px; margin-right: 150px; position: relative">-->
+        <div class="circular--portrait">
+        <img src={{mongoDB}} alt="" srcset="" style="height: 100%; width: 100%; position: relative; object-fit:cover; margin-right: auto; margin-left:auto;">
+        </div>
+        <!--</div>-->
+        {{#each data}}
+            <label style="margin-top: 25px;" id="label" for={{this.z}}>{{this.x}}</label>
+            <input id={{this.z}} type={{this.y}} placeholder={{this.x}} name={{this.z}}>
+        {{/each}}
+
+        <input type="submit" value="Login" onclick="redirect()">
+
+    </div>
+</form>
+</div>
+
