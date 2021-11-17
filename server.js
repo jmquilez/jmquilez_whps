@@ -50,7 +50,7 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(session({
     secret: 'secretsess',
-    resave: false,
+    resave: true,
     saveUninitialized: false
 }));
 app.use(flash());

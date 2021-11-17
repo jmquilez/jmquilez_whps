@@ -9,7 +9,9 @@ const bucket = new Schema({
     date: Date, 
     title: String,
     description: String,
-    likes: Number
+    likes: Number,
+    id: String,
+    url: String,
 });
 
 bucket.methods.encryptPassword = (password) => {

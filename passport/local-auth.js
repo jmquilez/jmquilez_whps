@@ -73,10 +73,12 @@ passport.use('postafile', new customStrat(
                 verify()
             }
             const newPost = new Bucket();
-            newPost.author = req.session.userId;
+            newPost.author = req.session.user_name;
             newPost.date = Date();
-            newPost.title = serp;
-            newPost.description = "yes";
+            newPost.id = serp;
+            newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
+            newPost.title = req.body.titl;
+            newPost.description = req.body.descr;
             newPost.likes = 0;
             await newPost.save();
             done(null, newPost, null);

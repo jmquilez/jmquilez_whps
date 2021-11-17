@@ -6,6 +6,7 @@ const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 const multa = require('multer');
 const format = require('format');
+const postales = require('../models/bucket');
 
 const gc = new Storage({
     keyFilename: path.join(__dirname, "../tics-332218-fa68b13dfa5d.json"),
@@ -27,7 +28,7 @@ const bucket = gc.bucket('jmquilez');
 
 // Routing
 
-router.get('/postafile', (req, res, next) => {
+router.get('/postafile', isAuth, (req, res, next) => {
     res.render('postafile');
 });
 
@@ -61,24 +62,33 @@ router.get('/postafile', (req, res, next) => {
       blobStream.end(req.file.buffer);
 });*/
 
-router.get('/', (req, res) => {
-    res.render('index', {
-        title: 'Home Page',
-        name: 'Esterling Accime',
-        style:  'home.css',
-        
-        age: 5,
-        isDisplayName: false,
-        isAgeEnabled: true,
-        people: [
-            {firstName: "Yehuda", lastName: "Katz"},
-            {firstName: "Carl", lastName: "Lerche"},
-            {firstName: "Alan", lastName: "Johnson"}
-        ],
+function findPosts() {
+    const postsArray = postales.find({likes: 0});
+    return postsArray
+}
 
-        test: '<h3>Welcome to New Orlands</h3>',
-        banner: "https://webassets.mongodb.com/_com_assets/cms/PixelheroHackathontest-iv8i0nrxfb.png",
-    });
+router.get('/', (req, res) => {
+    postales.find().then(poste => {
+        console.log(poste)
+        res.render('index', {
+            title: 'Home Page',
+            name: 'Esterling Accime',
+            style:  'home.css',
+            posts: poste,
+            age: 5,
+            isDisplayName: false,
+            isAgeEnabled: true,
+            people: [
+                {firstName: "Yehuda", lastName: "Katz"},
+                {firstName: "Carl", lastName: "Lerche"},
+                {firstName: "Alan", lastName: "Johnson"}
+            ],
+    
+            test: '<h3>Welcome to New Orlands</h3>',
+            banner: "https://webassets.mongodb.com/_com_assets/cms/PixelheroHackathontest-iv8i0nrxfb.png",
+        });
+    })
+    
 });
 
 router.get('/signup', (req, res) => {
@@ -189,7 +199,7 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
           //const userId = req.user._id
         
           // Create a new blob in the bucket and upload the file data.
-          const blob = bucket.file(user.title);
+          const blob = bucket.file(user.id);
           const blobStream = blob.createWriteStream();
         
           blobStream.on('error', err => {
