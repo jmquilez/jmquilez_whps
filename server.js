@@ -60,6 +60,8 @@ app.use(passport.session());
 app.use((req, res, next) => {
     app.locals.signUps = req.flash('signups');
     app.locals.signIns = req.flash('signIns');
+    app.locals.signInsProperly = req.flash('signinproperly');
+    app.locals.signUpsProperly = req.flash('signupproperly');
     next();
 });
 

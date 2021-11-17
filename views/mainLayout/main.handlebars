@@ -4,17 +4,22 @@
 <head>
     <script>
         function fade(element) {
-                var op = 1;  // initial opacity
-                var timer = setInterval(function () {
-                    if (op <= 0.1) {
-                        clearInterval(timer);
-                        element.style.display = 'none';
-                    }
+            var op = 1;  // initial opacity
+            var timer = setInterval(function () {
+                if (op <= 0.1) {
+                    clearInterval(timer);
+                    element.style.display = 'none';
+                }
+                if (element) {
                     element.style.opacity = op;
                     element.style.filter = 'alpha(opacity=' + op * 100 + ")";
                     op -= op * 0.1;
-                }, 40);
-            }
+                } else {
+                    return
+                }
+
+            }, 40);
+        }
         function fasd() {
             const element = document.getElementById("tables");
             //element.classList.toggle('fade');
@@ -70,6 +75,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item" href="/perfil">Profile</a></li>
+                                <li><a class="dropdown-item" style="color: red;" href="/logout">Logout</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -84,14 +90,32 @@
             </div>
         </nav>
         {{#if signUps}}
-        <div class="alert alert-danger" id="tables" onclick="fasd()"
-            style="display: flex; flex-direction: column; justify-content: center; color: #D7A7D3; width: 600px; height: 50px; margin-top: 40px; margin-left: auto; margin-right: auto; align-items: center; text-align: center;">
-            {{signUps}}</div>
+        <div class="alert alert-dismissible alert-danger" id="tables" onclick="fasd()"
+            style="display: flex; flex-direction: column; justify-content: center; color: #D7A7D3; max-width: 81rem; height: 50px; margin-top: 40px; margin-left: auto; margin-right: auto; align-items: center; text-align: center;">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" style="margin-top: -15px;"></button>
+            {{signUps}}
+        </div>
         {{/if}}
         {{#if signIns}}
-        <div class="alert alert-danger" id="tables" onclick="fasd()"
-            style="display: flex; flex-direction: column; justify-content: center; color: #D7A7D3; width: 600px; height: 50px; margin-top: 40px; margin-left: auto; margin-right: auto; align-items: center; text-align: center;">
-            {{signIns}}</div>
+        <div class="alert alert-dismissible alert-danger" id="tables" onclick="fasd()"
+            style="display: flex; flex-direction: column; justify-content: center; color: #D7A7D3; max-width: 81rem; height: 50px; margin-top: 40px; margin-left: auto; margin-right: auto; align-items: center; text-align: center;">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" style="margin-top: -15px;"></button>
+            {{signIns}}
+        </div>
+        {{/if}}
+        {{#if signUpsProperly}}
+        <div class="alert alert-dismissible alert-success" id="tables" onclick="fasd()"
+            style="display: flex; flex-direction: column; justify-content: center; color: #D7A7D3; max-width: 81rem; height: 50px; margin-top: 40px; margin-left: auto; margin-right: auto; align-items: center; text-align: center;">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" style="margin-top: -15px;"></button>
+            {{signUpsProperly}}
+        </div>
+        {{/if}}
+        {{#if signInsProperly}}
+        <div class="alert alert-dismissible alert-success" id="tables" onclick="fasd()"
+            style="display: flex; flex-direction: column; justify-content: center; color: #D7A7D3; max-width: 81rem; height: 50px; margin-top: 40px; margin-left: auto; margin-right: auto; align-items: center; text-align: center;">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" style="margin-top: -15px;"></button>
+            {{signInsProperly}}
+        </div>
         {{/if}}
         {{{ body }}}
 

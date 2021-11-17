@@ -29,10 +29,10 @@ const bucket = gc.bucket('jmquilez');
 
 router.get('/postafile', (req, res, next) => {
     res.render('postafile');
-})
+});
 
-router.post('/postafile', multer.single('filename'), (req, res, next) => {
-    console.log(req.files)
+/*router.post('/postafile', multer.single('filename'), (req, res, next) => {
+    //console.log(req.files)
     console.log(req.file)
     if (!req.file) {
         res.status(400).send('No file uploaded.');
@@ -59,7 +59,7 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
       });
     
       blobStream.end(req.file.buffer);
-});
+});*/
 
 router.get('/', (req, res) => {
     res.render('index', {
@@ -126,9 +126,12 @@ router.post('/signin', passport.authenticate('local-signin', {
 router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
-    req.session.userId = "null";
+    req.session.userId = null;
+    req.session.user_name = null;
+    req.session.name = null;
+    req.session.email = null;
     req.session.admin = false;
-    console.log(req.session.user, req.session.admin);
+    console.log(req.session.userId, req.session.admin);
 });
 
 
@@ -175,6 +178,39 @@ router.post('/signup', passport.authenticate('local-signup', {
     passReqToCallback: false
 }));
 
+router.post('/postafile', multer.single('filename'), (req, res, next) => {
+    passport.authenticate('postafile', function(err, user, info) {
+        console.log(req.file)
+        if (!req.file) {
+            res.status(400).send('No file uploaded.');
+            return;
+        }
+    
+          //const userId = req.user._id
+        
+          // Create a new blob in the bucket and upload the file data.
+          const blob = bucket.file(user.title);
+          const blobStream = blob.createWriteStream();
+        
+          blobStream.on('error', err => {
+            next(err);
+          });
+        
+          blobStream.on('finish', () => {
+            // The public URL can be used to directly access the file via HTTP.
+            const publicUrl = format(
+              `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+            );
+            res.status(200).send(publicUrl);
+            console.log("file uploaded: ", publicUrl);
+          });
+        
+          blobStream.end(req.file.buffer);
+    })(req, res, next);
+    //res.redirect('/perfil');
+
+});
+
 
 router.get('/look', (req, res) => {
 
@@ -199,8 +235,12 @@ router.get('/look', (req, res) => {
     next();
 });*/
 
-router.get('/perfil'/*, isAuth*/, (req, res, next) => {
-    res.render('profile');
+router.get('/perfil', isAuth, (req, res, next) => {
+    res.render('profile', {
+        user_name: req.session.user_name,
+        name: req.session.user,
+        email: req.session.email,
+    });
 });
 
 

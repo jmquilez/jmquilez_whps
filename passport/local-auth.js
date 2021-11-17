@@ -1,8 +1,42 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy
 const customStrat = require('passport-custom').Strategy;
+const { uuid } = require('uuidv4');
+const { Storage } = require('@google-cloud/storage');
+const path = require('path');
+const multa = require('multer');
+
+const gc = new Storage({
+    keyFilename: path.join(__dirname, "..//tics-332218-fa68b13dfa5d.json"),
+    projectId: 'tics-332218'
+})
+
+gc.getBuckets().then(x => {
+    console.log(x)
+});
+
+const multer = multa({
+    storage: multa.memoryStorage(),
+    limits: {
+        fileSize: 5 * 1024 * 1024,
+    },
+});
+
+const bucket = gc.bucket('jmquilez');
 
 const User = require('../models/user');
+
+const Bucket = require('../models/bucket');
+
+var serie;
+
+async function veris() {
+    serie = uuid
+    const usap = await Bucket.findOne({ title: serie })
+    if (usap) {
+        veris()
+    }
+}
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -13,9 +47,49 @@ passport.deserializeUser(async (id, done) => {
     done(null, user);
 });
 
+async function verif(req, done) {
+    serie = uuid();
+
+    const usap = await Bucket.findOne({ title: serial })
+    if (usap) {
+        verif()
+    }
+    const newPost = new Bucket();
+    newPost.author = req.session.userId;
+    newPost.date = Date();
+    newPost.title = serial;
+    newPost.description = "yes";
+    newPost.likes = 0;
+    await newPost.save();
+    done(null, newPost, null);
+}
+
+passport.use('postafile', new customStrat(
+    async function (req, done) {
+        async function verify() {
+            const serp = uuid();
+            const usap = await Bucket.findOne({ title: serp })
+            if (usap) {
+                verify()
+            }
+            const newPost = new Bucket();
+            newPost.author = req.session.userId;
+            newPost.date = Date();
+            newPost.title = serp;
+            newPost.description = "yes";
+            newPost.likes = 0;
+            await newPost.save();
+            done(null, newPost, null);
+        }
+        verify()
+        //veris();
+
+    }
+))
+
 passport.use('local-signup', new customStrat(
     async function (req, done) {
-        const us = await User.findOne({email: req.body.email});
+        const us = await User.findOne({ email: req.body.email });
         //console.log(us);
         if (us) {
             return done(null, false, req.flash('signups', 'email taken already.'));
@@ -25,20 +99,20 @@ passport.use('local-signup', new customStrat(
             newUser.name = req.body.name
             newUser.surname = req.body.surname;
             newUser.email = req.body.email;
-            newUser.password = newUser.encryptPassword(req.body.password); 
+            newUser.password = newUser.encryptPassword(req.body.password);
             newUser.sex = req.body.sex;
             newUser.date = req.body.date;
             newUser.fav_color = req.body.color;
             await newUser.save()
-            done(null, newUser);
+            done(null, newUser, req.flash('signupproperly', `Signed in properly, Mr/Mrs ${newUser.name}`));
         }
-        
+
     }
 ));
 
 passport.use('local-signin', new customStrat(
     async function (req, done) {
-        const ues = await User.findOne({email: req.body.email});
+        const ues = await User.findOne({ email: req.body.email });
         if (!ues) {
             console.log("nope")
             return done(null, false, req.flash('signIns', 'User doesnt exist'));
@@ -49,11 +123,14 @@ passport.use('local-signin', new customStrat(
         }
 
         req.session.userId = ues._id;
+        req.session.user_name = ues.user_name;
+        req.session.user = ues.name;
+        req.session.email = ues.email;
         req.session.admin = true
 
         console.log(req.session.userId, req.session.admin)
 
-        done(null, ues);
+        done(null, ues, req.flash('signinproperly', `Signed in properly, Mr/Mrs ${ues.name}`));
     }
 ))
 
