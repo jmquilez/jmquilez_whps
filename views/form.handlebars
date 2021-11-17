@@ -18,7 +18,7 @@
             <!--</div>-->
             {{#each data}}
             <label style="margin-top: 25px;" id="label" for={{this.z}}>{{this.x}}</label>
-            <input id={{this.z}} type={{this.y}} placeholder={{this.x}} name={{this.z}}>
+            <input id={{this.z}} type={{this.y}} placeholder={{this.x}} name={{this.z}} required>
             {{/each}}
 
 
@@ -27,22 +27,22 @@
             <div class="wrapper" style="margin-bottom: 10px;">
                 {{#each sex}}
                 <label style="margin-top: 25px;" id={{this.z}} class="Radio" for={{this.z}}>
-                    <input class="Radio-Input" type="radio" id="sex" name="sex" value={{this.z}} />
+                    <input class="Radio-Input" type="radio" id="sex" name="sex" value={{this.z}} required />
                     {{this.nam}}
                 </label>
                 {{/each}}
             </div>
 
 
-            <label style="margin-top: 25px; margin-left: 30px;" for="dating">Fecha</label>
-            <input style="margin-top: 25px;" name="date" type="date" data-date-inline-picker="true" id="dating" />
-            <label style="margin-top: 30px; margin-left: 30px;" for="corl">Color favorito</label>
+            <label style="margin-top: 25px; margin-left: 30px;" for="dating" aria-required="true">Fecha de nacimiento</label>
+            <input style="margin-top: 25px;" name="date" type="date" data-date-inline-picker="true" id="dating" required/>
+            <label style="margin-top: 30px; margin-left: 30px;" for="corl" >Color favorito</label>
             <!--<div class="select">-->
 
-            <input type="color" id="corl" name="color">
+            <input type="color" id="corl" name="color" required>
             <!--</div>-->
 
-            <input type="submit" value="Submit" onclick="redirect()">
+            <input type="submit" value="Submit" required>
 
         </div>
     </form>

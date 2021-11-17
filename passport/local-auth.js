@@ -106,6 +106,11 @@ passport.use('local-signup', new customStrat(
             newUser.date = req.body.date;
             newUser.fav_color = req.body.color;
             await newUser.save()
+            req.session.userId = newUser._id;
+            req.session.user_name = newUser.user_name;
+            req.session.user = newUser.name;
+            req.session.email = newUser.email;
+            req.session.admin = true
             done(null, newUser, req.flash('signupproperly', `Signed in properly, Mr/Mrs ${newUser.name}`));
         }
 
