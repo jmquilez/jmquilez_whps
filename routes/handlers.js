@@ -211,7 +211,9 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
             const publicUrl = format(
               `https://storage.googleapis.com/${bucket.name}/${blob.name}`
             );
-            res.status(200).send(publicUrl);
+            console.log(publicUrl);
+            res.redirect('/perfil');
+            //res.status(200).send(publicUrl);
             console.log("file uploaded: ", publicUrl);
           });
         
@@ -246,11 +248,15 @@ router.get('/look', (req, res) => {
 });*/
 
 router.get('/perfil', isAuth, (req, res, next) => {
-    res.render('profile', {
-        user_name: req.session.user_name,
-        name: req.session.user,
-        email: req.session.email,
-    });
+    postales.find({ author: req.session.user_name }).then(postal => {
+        res.render('profile', {
+            user_name: req.session.user_name,
+            name: req.session.user,
+            email: req.session.email,
+            postal: postal,
+        });
+    })
+    
 });
 
 
