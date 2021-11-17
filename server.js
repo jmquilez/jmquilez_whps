@@ -73,10 +73,10 @@ app.use('/', routes);
 
 //Morgan
 
+const puert = process.env.PORT || 3001;
 
 
 
-
-app.listen(3001, () => {
+app.listen(puert, () => {
     console.log('Server is starting at port ', 3001);
 });
