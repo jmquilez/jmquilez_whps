@@ -1,32 +1,64 @@
 <!--<div class="container-fluid" style="margin:0px !important;">-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Asap&family=Cairo:wght@300&family=Comfortaa&family=Lobster&family=Outfit:wght@700&family=Praise&family=Varela+Round&display=swap" rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Asap&family=Cairo:wght@300&family=Comfortaa&family=Lobster&family=Outfit:wght@700&family=Praise&family=Varela+Round&display=swap"
+    rel="stylesheet">
 
-<div style="align-items: center;">
-    <div class="container align-items-center justify-content-center" style="padding: 1px; margin-bottom: 30px; margin-top: 30px;">
-    <div class="card border-info mb-3" style="max-width: 100rem; padding: 1px; margin-top: 20px;">
-        <div class="card-header" style="text-align: center; font-family: 'Lobster', cursive; font-size: 60px;">{{name}}</div>
-        <div class="card-body">
-            <h4 class="card-title" style="text-align: center; font-family: 'Cairo', sans-serif;">{{user_name}}</h4>
-            <p class="card-text" style="font-family: 'Comfortaa', cursive;">Quisque nec dolor et ex suscipit vulputate. Nulla condimentum tincidunt mollis. Proin et eros sit amet augue dapibus feugiat. Mauris iaculis, lorem vel blandit dapibus, ex risus placerat turpis, non congue libero urna sit amet nisl. Sed a magna pulvinar, auctor est quis, egestas quam. Praesent rhoncus leo quis interdum facilisis. Aliquam scelerisque, eros in dapibus porta, ipsum mi vehicula ligula, vitae tincidunt nibh velit non elit. Donec tincidunt malesuada diam id viverra. Mauris id facilisis urna, sed dignissim dui. Proin vulputate dictum purus ac aliquet. Cras auctor dolor at semper luctus. Nunc vitae consequat libero, at porta nisl. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras hendrerit magna volutpat dui rhoncus varius.</p>
+
+    <div class="container align-items-center justify-content-center"
+        style="padding: 1px; margin-bottom: 30px; margin-top: 30px; margin-right:auto; margin-left:auto;">
+        <div class="card border-info mb-3" style="max-width: 100rem; padding: 1px; margin-top: 20px;">
+            <div class="card-header" style="text-align: center; font-family: 'Lobster', cursive; font-size: 60px;">
+                {{name}}</div>
+            <div class="card-body">
+                <h4 class="card-title" style="text-align: center; font-family: 'Cairo', sans-serif;">{{user_name}}</h4>
+                <p class="card-text" style="font-family: 'Comfortaa', cursive;">Quisque nec dolor et ex suscipit
+                    vulputate. Nulla condimentum tincidunt mollis. Proin et eros sit amet augue dapibus feugiat. Mauris
+                    iaculis, lorem vel blandit dapibus, ex risus placerat turpis, non congue libero urna sit amet nisl.
+                    Sed a magna pulvinar, auctor est quis, egestas quam. Praesent rhoncus leo quis interdum facilisis.
+                    Aliquam scelerisque, eros in dapibus porta, ipsum mi vehicula ligula, vitae tincidunt nibh velit non
+                    elit. Donec tincidunt malesuada diam id viverra. Mauris id facilisis urna, sed dignissim dui. Proin
+                    vulputate dictum purus ac aliquet. Cras auctor dolor at semper luctus. Nunc vitae consequat libero,
+                    at porta nisl. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras hendrerit magna
+                    volutpat dui rhoncus varius.</p>
+            </div>
         </div>
-    </div>
-    <div class="col-md-60 align-items-center justify-content-center" style="align-items: center;">
-    {{#each postal}}
-    <div class="card border-success mb-3"
-      style="max-width: 60rem; padding: 1px; object-fit: contain;">
-      <div class="card-header" style="font-family: 'Varela Round', sans-serif; font-size: x-large; text-align: center;">{{this.title}}</div>
-      <div class="card-body">
-        <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By you</h4>
-        <img src={{this.url}} style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" />
-        <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">{{this.description}}</p>
-      </div>
-    </div>
-    {{/each}}
-  </div>
+        <!--<div class="col-md-60 align-items-center justify-content-center" style="align-items: center;">-->
+            <div style="display:flex; justify-content: center; flex-direction: column; align-items:center; margin-right: auto; margin-left: auto;">
+            {{#each postal}}
+            {{#ifEquals this.filetype "image"}}
+            <div class="card border-success mb-3" style="width: 60rem; padding: 1px; object-fit: contain;">
+                <div class="card-header"
+                    style="font-family: 'Varela Round', sans-serif; font-size: x-large; text-align: center;">
+                    {{this.title}}</div>
+                <div class="card-body">
+                    <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By
+                        you</h4>
+                    <img src={{this.url}}
+                        style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" />
+                    <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
+                        {{this.description}}</p>
+                </div>
+            </div>
+            {{else}}
+            <div class="card border-success mb-3" style="width: 60rem; padding: 1px; object-fit: contain;">
+                <div class="card-header"
+                    style="font-family: 'Varela Round', sans-serif; font-size: x-large; text-align: center;">
+                    {{this.title}}</div>
+                <div class="card-body">
+                    <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By
+                        you</h4>
+                    <video src={{this.url}} controls
+                        style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" />
+                    <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
+                        {{this.description}}</p>
+                </div>
+            </div>
+            {{/ifEquals}}
+            {{/each}}
+            </div>
+        <!--</div>-->
 
-</div>
-
-</div>
+    </div>
 

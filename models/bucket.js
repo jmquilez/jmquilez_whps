@@ -12,6 +12,8 @@ const bucket = new Schema({
     likes: Number,
     id: String,
     url: String,
+    filetype: String,
+    extension: String,
 });
 
 bucket.methods.encryptPassword = (password) => {
@@ -22,4 +24,4 @@ bucket.methods.comparePassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 }
 
-module.exports = mongoose.model('bucket', bucket);
+module.exports = mongoose.model('bucket_office', bucket);

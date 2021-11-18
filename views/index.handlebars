@@ -1,9 +1,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Asap&family=Outfit:wght@700&family=Praise&family=Varela+Round&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Asap&family=Outfit:wght@700&family=Praise&family=Varela+Round&display=swap"
+  rel="stylesheet">
 {{> header}}
 
-<div class="container" style="margin-bottom: 30px; margin-top: 30px; padding: 1px; align-items: center;">
+<div class="container" style="margin-bottom: 30px; margin-top: 30px; display:flex; justify-content: center; flex-direction: column; align-items:center; margin-right: auto; margin-left: auto;  width: 80rem;">
   <!--<h2>Hello World!!!!</h2>
   <p>Welcome to my App</p>
 
@@ -52,25 +54,42 @@
     title: String,
     description: String,
     likes: Number-->
-  <div class="card border-header mb-3" style="max-width: 60rem; padding: 1px; object-fit: contain margin-top: 30px;">
+  <div class="card border-header mb-3" style="width: 60rem; padding: 1px; object-fit: contain margin-top: 30px;">
     <div class="card-header" id="hasc" style="font-family: 'Praise', cursive; font-size: 60px;">JMQUILEZ</div>
-      <div class="card-body">
-        <h4 class="card-title" style="text-align: center;">WHERE THE WORLD BUILDS SOCIAL MEDIA</h4>
-        <img src="https://miro.medium.com/max/1400/1*uU4FMNjbrr3QVOyQVH8fag.jpeg" style="object-fit: cover; width: 100%; height: 15vw; margin-bottom: 10px;" />
-        <p class="card-text" style="margin-top: 10px; text-align: center;">Start uploading. Now.</p>
-      </div>
+    <div class="card-body">
+      <h4 class="card-title" style="text-align: center; font-family: 'Varela Round', sans-serif;">WHERE THE WORLD BUILDS SOCIAL MEDIA</h4>
+      <img src="https://miro.medium.com/max/1400/1*uU4FMNjbrr3QVOyQVH8fag.jpeg"
+        style="object-fit: cover; width: 100%; height: 15vw; margin-bottom: 10px;" />
+      <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">Start uploading. Now.</p>
+    </div>
   </div>
-  <div class="col-md-60" style="align-items: center;">
+  <div style="display:flex; justify-content: center; flex-direction: column; align-items:center; margin-right: auto; margin-left: auto;">
     {{#each posts}}
-    <div class="card border-success mb-3"
-      style="max-width: 60rem; padding: 1px; object-fit: contain;">
-      <div class="card-header" style="font-family: 'Varela Round', sans-serif; font-size: x-large; text-align: center;">{{this.title}}</div>
+    {{#ifEquals this.filetype "image"}}
+    <div class="card border-success mb-3" style="width: 60rem; padding: 1px; object-fit: contain;">
+      <div class="card-header" style="font-family: 'Varela Round', sans-serif; font-size: x-large; text-align: center;">
+        {{this.title}}</div>
       <div class="card-body">
-        <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By {{this.author}}</h4>
+        <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By
+          you</h4>
         <img src={{this.url}} style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" />
-        <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">{{this.description}}</p>
+        <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
+          {{this.description}}</p>
       </div>
     </div>
+    {{else}}
+    <div class="card border-success mb-3" style="width: 60rem; padding: 1px; object-fit: contain;">
+      <div class="card-header" style="font-family: 'Varela Round', sans-serif; font-size: x-large; text-align: center;">
+        {{this.title}}</div>
+      <div class="card-body">
+        <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By
+          you</h4>
+        <video src={{this.url}} controls style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" />
+        <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
+          {{this.description}}</p>
+      </div>
+    </div>
+    {{/ifEquals}}
     {{/each}}
   </div>
 

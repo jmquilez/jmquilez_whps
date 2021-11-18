@@ -72,7 +72,22 @@ passport.use('postafile', new customStrat(
             if (usap) {
                 verify()
             }
+            const ext = path.extname(req.file.originalname);
+            
             const newPost = new Bucket();
+            newPost.extension = ext;
+            if (newPost.extension == '.jpeg' || newPost.extension == '.jpg' || newPost.extension == '.png' || newPost.extension == '.gif' || newPost.extension == '.tiff' || newPost.extension == '.psd' || newPost.extension == '.pdf') {
+                newPost.filetype = 'image';
+                console.log(ext)
+                console.log('image');
+            } else if (newPost.extension == '.mp4' || newPost.extension == '.avi' || newPost.extension == '.mov' || newPost.extension == '.wmv' || newPost.extension == '.flv' || newPost.extension == '.mkv' || newPost.extension == '.f4v' || newPost.extension == '.avchd' || newPost.extension == '.swf' || newPost.extension == '.webm' || newPost.extension == '.mpeg-2') {
+                newPost.filetype = 'video';
+                console.log(ext)
+                console.log('video')
+            } else {
+                res.status(400).send('Only videos, photos, gifs or pdfs');
+            }
+            
             newPost.author = req.session.user_name;
             newPost.date = Date();
             newPost.id = serp;

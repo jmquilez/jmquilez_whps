@@ -6,6 +6,7 @@ const path = require('path');
 const morgan = require('morgan');
 const passport = require('passport');
 
+
 // Importing files
 const routes = require('./routes/handlers');
 const session = require('express-session');
@@ -18,26 +19,15 @@ require('./passport/local-auth');
 // Sending static files with Express 
 app.use(express.static('public'));
 
-
 const hbs = expbs.create({
     defaultLayout: 'main',
     layoutsDir: path.join(__dirname, 'views/mainLayout'), // change layout folder name
     partialsDir: path.join(__dirname, 'views/pieces'), // change partials folder name
 
     // create custom express handlebars helpers
-    helpers: {
-        calculation: function(value) {
-            return value * 5;
-        },
-
-        list: function(value, options) {
-            let out = "<ul>";
-            for (let i = 0; i < value.length; i++) {
-                out = out + "<li>" +  options.fn(value[i]) + "</li>";
-            }
-            return out + "</ul>";
-        }
-    }
+    helpers: 
+        require('./config/handlebars/helpers'),
+    
 });
 
 
