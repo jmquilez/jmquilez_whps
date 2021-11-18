@@ -4,8 +4,20 @@
   href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Asap&family=Outfit:wght@700&family=Praise&family=Varela+Round&display=swap"
   rel="stylesheet">
 {{> header}}
-
-<div class="container" style="margin-bottom: 30px; margin-top: 30px; display:flex; justify-content: center; flex-direction: column; align-items:center; margin-right: auto; margin-left: auto;  width: 80rem;">
+<script>
+  function playIt() {
+    const dosc = document.getElementById("vids")
+    if (dosc.paused) {
+      dosc.play()
+      console.log("plays")
+    } else {
+      dosc.pause
+      console.log("notplays")
+    }
+  }
+</script>
+<div class="container align-items-center justify-content-center " style="margin-bottom: 30px; margin-top: 30px; margin-right: auto; margin-left: auto; display:flex; justify-content: center; flex-direction: column; align-items:center;">
+<!--<div class="container" style="margin-bottom: 30px; margin-top: 30px; display:flex; justify-content: center; flex-direction: column; align-items:center; margin-right: auto; margin-left: auto;  width: 80rem;">-->
   <!--<h2>Hello World!!!!</h2>
   <p>Welcome to my App</p>
 
@@ -71,7 +83,7 @@
         {{this.title}}</div>
       <div class="card-body">
         <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By
-          you</h4>
+          {{this.author}}</h4>
         <img src={{this.url}} style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" />
         <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
           {{this.description}}</p>
@@ -83,12 +95,16 @@
         {{this.title}}</div>
       <div class="card-body">
         <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By
-          you</h4>
-        <video src={{this.url}} controls style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" />
+          {{this.author}}</h4>
+        <video id="vids" class="video" controls="true" playsinline autoplay muted loop preload="auto" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" >
+          <source src={{this.url}} type="video/{{this.extension}}">
+        </video>
         <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
           {{this.description}}</p>
+        <!--<video src={{this.url}} autoplay muted></video>-->
       </div>
     </div>
+    <!--<button type="button" onclick="playIt()" class="btn btn-primary">Primary</button>-->
     {{/ifEquals}}
     {{/each}}
   </div>

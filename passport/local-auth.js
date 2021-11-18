@@ -88,6 +88,7 @@ passport.use('postafile', new customStrat(
                 res.status(400).send('Only videos, photos, gifs or pdfs');
             }
             
+            newPost.extension = ext.substring(1, ext.length);
             newPost.author = req.session.user_name;
             newPost.date = Date();
             newPost.id = serp;
