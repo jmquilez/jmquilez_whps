@@ -85,7 +85,8 @@ passport.use('postafile', new customStrat(
                 console.log(ext)
                 console.log('video')
             } else {
-                res.status(400).send('Only videos, photos, gifs or pdfs');
+                console.log("nope")
+                //res.status(400).send('Only videos, photos, gifs or pdfs');
             }
             
             newPost.extension = ext.substring(1, ext.length);
