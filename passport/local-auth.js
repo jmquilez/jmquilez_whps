@@ -80,7 +80,7 @@ passport.use('postafile', new customStrat(
                 newPost.filetype = 'image';
                 console.log(ext)
                 console.log('image');
-            } else if (newPost.extension == '.mp4' || newPost.extension == '.avi' || newPost.extension == '.mov' || newPost.extension == '.wmv' || newPost.extension == '.flv' || newPost.extension == '.mkv' || newPost.extension == '.f4v' || newPost.extension == '.avchd' || newPost.extension == '.swf' || newPost.extension == '.webm' || newPost.extension == '.mpeg-2') {
+            } else if (newPost.extension == '.mp4' || newPost.extension == '.avi' || newPost.extension == '.mov' || newPost.extension == '.wmv' || newPost.extension == '.flv' || newPost.extension == '.mkv' || newPost.extension == '.f4v' || newPost.extension == '.avchd' || newPost.extension == '.swf' || newPost.extension == '.webm' || newPost.extension == '.mpeg-2' || newPost.extension == '.MOV') {
                 newPost.filetype = 'video';
                 console.log(ext)
                 console.log('video')
