@@ -77,12 +77,12 @@ passport.use('postafile', new customStrat(
             const newPost = new Bucket();
             if (ext == '.jpeg' || ext == '.jpg' || ext == '.png' || ext == '.gif' || ext == '.tiff' || ext == '.psd' || ext == '.pdf') {
                 newPost.filetype = 'image';
-                newPost.extension = ext;
+                newPost.extension = ext.substring(1, ext.length);;
                 console.log(ext)
                 console.log('image');
             } else if (ext == '.mp4' || ext == '.avi' || ext == '.wmv' || ext == '.flv' || ext == '.mkv' || ext == '.f4v' || ext == '.avchd' || ext == '.swf' || ext == '.webm' || ext == '.mpeg-2') {
                 newPost.filetype = 'video';
-                newPost.extension = ext;
+                newPost.extension = ext.substring(1, ext.length);;
                 console.log(ext)
                 console.log('video')
             } else if (ext == '.mov' || ext == '.MOV') {
@@ -95,7 +95,7 @@ passport.use('postafile', new customStrat(
 
             }
             
-            newPost.extension = ext.substring(1, ext.length);
+            //newPost.extension = ext.substring(1, ext.length);
             newPost.author = req.session.user_name;
             newPost.date = Date();
             newPost.id = serp;
