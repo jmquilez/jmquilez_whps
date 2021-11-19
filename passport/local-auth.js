@@ -80,13 +80,18 @@ passport.use('postafile', new customStrat(
                 newPost.filetype = 'image';
                 console.log(ext)
                 console.log('image');
-            } else if (newPost.extension == '.mp4' || newPost.extension == '.avi' || newPost.extension == '.mov' || newPost.extension == '.wmv' || newPost.extension == '.flv' || newPost.extension == '.mkv' || newPost.extension == '.f4v' || newPost.extension == '.avchd' || newPost.extension == '.swf' || newPost.extension == '.webm' || newPost.extension == '.mpeg-2' || newPost.extension == '.MOV') {
+            } else if (newPost.extension == '.mp4' || newPost.extension == '.avi' || newPost.extension == '.wmv' || newPost.extension == '.flv' || newPost.extension == '.mkv' || newPost.extension == '.f4v' || newPost.extension == '.avchd' || newPost.extension == '.swf' || newPost.extension == '.webm' || newPost.extension == '.mpeg-2') {
                 newPost.filetype = 'video';
                 console.log(ext)
                 console.log('video')
-            } else {
+            } else if (newPost.extension == '.mov' || newPost.extension == '.MOV') {
+                newPost.filetype = 'video'
+                newPost.extension = 'mp4'
                 console.log("nope")
                 //res.status(400).send('Only videos, photos, gifs or pdfs');
+            } else {
+                console.log("loie")
+                
             }
             
             newPost.extension = ext.substring(1, ext.length);
