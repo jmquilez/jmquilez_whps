@@ -75,23 +75,24 @@ passport.use('postafile', new customStrat(
             const ext = path.extname(req.file.originalname);
             
             const newPost = new Bucket();
-            newPost.extension = ext;
-            if (newPost.extension == '.jpeg' || newPost.extension == '.jpg' || newPost.extension == '.png' || newPost.extension == '.gif' || newPost.extension == '.tiff' || newPost.extension == '.psd' || newPost.extension == '.pdf') {
+            if (ext == '.jpeg' || ext == '.jpg' || ext == '.png' || ext == '.gif' || ext == '.tiff' || ext == '.psd' || ext == '.pdf') {
                 newPost.filetype = 'image';
+                newPost.extension = ext;
                 console.log(ext)
                 console.log('image');
-            } else if (newPost.extension == '.mp4' || newPost.extension == '.avi' || newPost.extension == '.wmv' || newPost.extension == '.flv' || newPost.extension == '.mkv' || newPost.extension == '.f4v' || newPost.extension == '.avchd' || newPost.extension == '.swf' || newPost.extension == '.webm' || newPost.extension == '.mpeg-2') {
+            } else if (ext == '.mp4' || ext == '.avi' || ext == '.wmv' || ext == '.flv' || ext == '.mkv' || ext == '.f4v' || ext == '.avchd' || ext == '.swf' || ext == '.webm' || ext == '.mpeg-2') {
                 newPost.filetype = 'video';
+                newPost.extension = ext;
                 console.log(ext)
                 console.log('video')
-            } else if (newPost.extension == '.mov' || newPost.extension == '.MOV') {
-                newPost.filetype = 'video'
-                newPost.extension = 'mp4'
+            } else if (ext == '.mov' || ext == '.MOV') {
+                newPost.filetype = 'video';
+                newPost.extension = 'mp4';
                 console.log("nope")
                 //res.status(400).send('Only videos, photos, gifs or pdfs');
             } else {
                 console.log("loie")
-                
+
             }
             
             newPost.extension = ext.substring(1, ext.length);
