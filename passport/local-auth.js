@@ -67,6 +67,7 @@ async function verif(req, done) {
 passport.use('postafile', new customStrat(
     async function (req, done) {
         async function verify() {
+            console.log('requestbody',  req.body);
             const serp = uuid();
             const usap = await Bucket.findOne({ title: serp })
             if (usap) {
@@ -77,17 +78,32 @@ passport.use('postafile', new customStrat(
             const newPost = new Bucket();
             if (ext == '.jpeg' || ext == '.jpg' || ext == '.png' || ext == '.gif' || ext == '.tiff' || ext == '.psd' || ext == '.pdf') {
                 newPost.filetype = 'image';
-                newPost.extension = ext.substring(1, ext.length);;
+                newPost.extension = ext.substring(1, ext.length);
+                newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
                 console.log(ext)
                 console.log('image');
             } else if (ext == '.mp4' || ext == '.avi' || ext == '.wmv' || ext == '.flv' || ext == '.mkv' || ext == '.f4v' || ext == '.avchd' || ext == '.swf' || ext == '.webm' || ext == '.mpeg-2') {
                 newPost.filetype = 'video';
-                newPost.extension = ext.substring(1, ext.length);;
+                newPost.extension = ext.substring(1, ext.length);
+                if (req.body.checkerboard) {
+                    newPost.isHLSCoded = false
+                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
+                } else {
+                    newPost.isHLSCoded = true
+                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}/${serp}.m3u8`;
+                }
                 console.log(ext)
                 console.log('video')
             } else if (ext == '.mov' || ext == '.MOV') {
                 newPost.filetype = 'video';
                 newPost.extension = 'mp4';
+                if (req.body.checkerboard) {
+                    newPost.isHLSCoded = false
+                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
+                } else {
+                    newPost.isHLSCoded = true
+                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}/${serp}.m3u8`;
+                }
                 console.log("nope")
                 //res.status(400).send('Only videos, photos, gifs or pdfs');
             } else {
@@ -99,10 +115,12 @@ passport.use('postafile', new customStrat(
             newPost.author = req.session.user_name;
             newPost.date = Date();
             newPost.id = serp;
-            newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
+            
             newPost.title = req.body.titl;
             newPost.description = req.body.descr;
             newPost.likes = 0;
+            console.log('iscoded', newPost.isHLSCoded)
+            
             await newPost.save();
             done(null, newPost, null);
         }

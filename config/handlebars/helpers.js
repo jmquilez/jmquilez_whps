@@ -9,8 +9,8 @@ module.exports = {
       return "BAR!";
     },
     ifEquals: function(arg1, arg2, options) {
-        var fnTrue = options.fn, 
-        fnFalse = options.inverse;
+        /*var fnTrue = options.fn,
+        fnFalse = options.inverse;*/
         return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
     },
     calculation: function(value) {

@@ -5,6 +5,7 @@ const expbs = require('express-handlebars');
 const path = require('path');
 const morgan = require('morgan');
 const passport = require('passport');
+var cors = require('cors');
 
 
 // Importing files
@@ -15,6 +16,8 @@ const flash = require('connect-flash');
 //Init everything
 require('./database/db');
 require('./passport/local-auth');
+
+app.use(cors());
 
 // Sending static files with Express 
 app.use(express.static('public'));
@@ -35,6 +38,27 @@ const hbs = expbs.create({
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
+
 //Morgan & middlewares
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
@@ -54,6 +78,8 @@ app.use((req, res, next) => {
     app.locals.signUpsProperly = req.flash('signupproperly');
     next();
 });
+
+
 
 //app.use(express.bodyParser({keepExtensions:true,uploadDir:path.join(__dirname,'./files')}));
 

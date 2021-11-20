@@ -14,6 +14,7 @@ const bucket = new Schema({
     url: String,
     filetype: String,
     extension: String,
+    isHLSCoded: Boolean,
 });
 
 bucket.methods.encryptPassword = (password) => {
