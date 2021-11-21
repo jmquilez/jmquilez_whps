@@ -355,6 +355,7 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                         .on('start', (commandLins) => {
                             console.log('just started')
                             console.log(commandLins)
+                            res.redirect('/perfil');
                         })
                         .on('progress', (progress) => {
                             console.log('progresso');
@@ -400,7 +401,7 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
 
                                 console.log("removed temporary video file successfully")
                             })
-                            res.redirect('/');
+                            
                         }).run();
 
                 }).then(() => {

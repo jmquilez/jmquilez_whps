@@ -25,4 +25,4 @@ bucket.methods.comparePassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 }
 
-module.exports = mongoose.model('bucket_officesreal', bucket);
+module.exports = mongoose.model('buckey', bucket);
