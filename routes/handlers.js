@@ -344,7 +344,7 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                     console.log('video downloaded')
                 }).then(() => {
                     const readStream = fs.createReadStream(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`));
-                    ffmpeg(readStream, { timeout: 43200 } ).addOptions([
+                    ffmpeg(/*readStream*/path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), { timeout: 43200 } ).addOptions([
                         '-profile:v baseline',
                         '-level 3.0',
                         '-start_number 0',
