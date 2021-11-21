@@ -46,6 +46,7 @@
     if (Hls.isSupported()) {
 
       var video = document.getElementById(id);
+      var vids = videojs(id);
       var hls = new Hls();
       hls.loadSource(url);
       hls.attachMedia(video);
@@ -199,7 +200,7 @@
       <div class="card-body" style="display: flex; flex-direction: column;">
         <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By
           {{this.author}}</h4>
-        <video id={{this.id}} controls style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;">
+        <video id={{this.id}} class="video-js vjs-default-skin" preload="none" crossorigin="true" controls style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;">
           <!--class="video-js vjs-default-skin" preload="auto" crossorigin="true" controls width="640"
           height="268" controls-->
         </video>

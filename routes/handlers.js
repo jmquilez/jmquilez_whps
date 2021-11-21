@@ -11,6 +11,8 @@ const ffmpeg = require('fluent-ffmpeg');
 const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
 const fspromises = require('fs').promises;
 const fs = require('fs');
+const fpeg = require('child_process').exec
+var rimraf = require('rimraf');
 
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
@@ -116,7 +118,7 @@ router.get('/', (req, res) => {
 
     postales.find().then(poste => {
         console.log('foundposts')
-        console.log(poste)
+        //console.log(poste)
         const context = {
             usersDocuments: poste.map(document => {
                 return {
@@ -331,12 +333,18 @@ router.get('/dashboard', isAuth, (req, res, next) => {
 router.post('/postafile', multer.single('filename'), (req, res, next) => {
     passport.authenticate('postafile', function (err, user, info) {
         if (user.filetype == 'video' && user.isHLSCoded == true) {
+            const blob = bucket.file(`${user.id}/${user.id}0.ts`);
+            const blobStr = blob.createWriteStream();
+            blobStr.on('error', err => {
+                next(err);
+            });
+            console.log('bucketfile', blob);
             fspromises.mkdir(path.resolve(__dirname, `../cart/${user.id}`)).then(() => {
                 fspromises.writeFile(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), req.file.buffer, () => {
                     console.log('video downloaded')
                 }).then(() => {
                     const readStream = fs.createReadStream(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`));
-                    ffmpeg(/*`../videos/${user.id}.${user.extension}`*/ readStream, { timeout: 43200 }).addOptions([
+                    ffmpeg(readStream, { timeout: 43200 } ).addOptions([
                         '-profile:v baseline',
                         '-level 3.0',
                         '-start_number 0',
@@ -374,6 +382,24 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                                         });
                                 })
                             })//.then(res.redirect('/'));
+                            /*fs.rmdir(path.resolve(__dirname, `../cart/${user.id}`), (err) => {
+
+                                if (err) {
+                                return console.log("error occurred in deleting directory", err);
+                                }
+                                
+                                console.log("Directory deleted successfully")
+                            })*/
+                            rimraf(path.resolve(__dirname, `../cart/${user.id}`), function () { 
+                                console.log("removedhlsdir"); 
+                            });
+                            fs.unlink(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), (err) => {
+                                if (err) {
+                                    return console.log("error occurred in deleting directory", err);
+                                }
+
+                                console.log("removed temporary video file successfully")
+                            })
                             res.redirect('/');
                         }).run();
 
@@ -382,6 +408,85 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                 });
             });
 
+            /*`../videos/${user.id}.${user.extension}`*/
+            /*fspromises.mkdir(path.resolve(__dirname, `../cart/${user.id}`)).then(() => {
+                fspromises.writeFile(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), req.file.buffer, () => {
+                    console.log('video downloaded')
+                }).then(() => {
+                    //-hls_base_url https://storage.googleapis.com/jmquilez/${user.id}/ 
+                    /*const ffmpes = fpeg(`ffmpeg -i ${path.resolve(__dirname, `../videos/${user.id}.${user.extension}`)} -profile:v baseline -level 3.0 -start_number 0 -hls_segment_filename https://storage.googleapis.com/jmquilez/${user.id}/${user.ids}%01d.ts -hls_time 10 -hls_list_size 0 -f hls https://storage.googleapis.com/jmquilez/${user.id}/${user.id}.m3u8`, (error, stdout, stderr) => {
+                        if (error) {
+                            console.error(`exec error: ${error}`);
+                            return;
+                          }
+                          console.log(`stdout: ${stdout}`);
+                          console.error(`stderr: ${stderr}`);
+                    })
+                    ffmpes.stdout.on('data', function(chunk){
+                        var textChunk = chunk.toString('utf8');
+                        console.log(textChunk);
+                    });
+                    
+                    ffmpes.stderr.on('data', function(chunk){
+                        var textChunk = chunk.toString('utf8');
+                        console.error(textChunk);
+                    });*/
+                    /*const readStream = fs.createReadStream(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`));
+                    ffmpeg(readStream, { timeout: 43200 }).addOptions([
+                        '-profile:v baseline',
+                        '-level 3.0',
+                        '-start_number 0',
+                        `-hls_base_url https://storage.googleapis.com/jmquilez/${user.id}/`,
+                        `-hls_segment_filename https://storage.googleapis.com/jmquilez/${user.id}/${user.id}%01d.ts`,
+                        '-hls_time 10',
+                        '-hls_list_size 0',
+                        '-f hls'
+                    ])
+                    .save(`https://storage.googleapis.com/jmquilez/${user.id}/${user.id}.m3u8`)
+                        .on('start', (commandLins) => {
+                            console.log('just started')
+                            console.log(commandLins)
+                        })
+                        .on('progress', (progress) => {
+                            console.log('progresso');
+                            console.log(progress);
+                        })
+                        .on('error', (error, stdout, stderror) => {
+                            console.log('ERROR');
+                            console.log(req.file.path)
+                            console.log(error);
+                        })
+                        .on('end', () => {
+                            console.log("done creating .m3u8 file");
+                            res.redirect('/')
+                            /*console.log(path.resolve(__dirname, `../cart/${user.id}/${user.id}.m3u8`));
+                            fs.readdir(path.resolve(__dirname, `../cart/${user.id}`), (error, files) => {
+                                files.forEach(file => {
+                                    console.log('fileando')
+                                    console.log(file)
+                                    bucket.upload(path.resolve(__dirname, `../cart/${user.id}/${file}`), {
+                                        destination: `${user.id}/` + file,
+                                    }).then(() => {
+                                        console.log(`${file} uploaded to ${bucket.name}.`);
+                                    })
+                                        .catch((err) => {
+                                            console.error('ERROR:', err);
+                                        });
+                                })
+                            })//.then(res.redirect('/'));
+                            res.redirect('/');*/
+                        //})
+                        
+                        /*.toFormat('hls')
+                        .pipe(blobStr, {
+                            end: true
+                        });*/
+                        //.run();
+
+                /*}).then(() => {
+                    console.log('done');
+                });
+            });*/
 
         } else if (user.filetype = 'image' || user.isHLSCoded == false) {
             console.log(req.file)
