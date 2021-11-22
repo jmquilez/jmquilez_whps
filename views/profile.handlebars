@@ -12,37 +12,44 @@
 <script>
     function createIt(id, url) {
         function getOS() {
-  var userAgent = window.navigator.userAgent,
-      platform = window.navigator.platform,
-      macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
-      windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
-      iosPlatforms = ['iPhone', 'iPad', 'iPod'],
-      os = null;
+            var userAgent = window.navigator.userAgent,
+                platform = window.navigator.platform,
+                macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+                windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+                iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+                os = null;
 
-  if (macosPlatforms.indexOf(platform) !== -1) {
-    os = 'Mac OS';
-  } else if (iosPlatforms.indexOf(platform) !== -1) {
-    os = 'iOS';
-    /*video = <video id="vids"
-                 controls="true"
-                playsinline autoplay muted loop
-                preload="auto" type='video/{{this.extension}}; codecs="avc1.42E01E, mp4a.40.2"'
-                style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" >
-                <source src={{url}} type="video/{{this.extension}}">
-        </video>*/
-  } else if (windowsPlatforms.indexOf(platform) !== -1) {
-    os = 'Windows';
-  } else if (/Android/.test(userAgent)) {
-    os = 'Android';
-  } else if (!os && /Linux/.test(platform)) {
-    os = 'Linux';
-  }
+            if (macosPlatforms.indexOf(platform) !== -1) {
+                os = 'Mac OS';
+            } else if (iosPlatforms.indexOf(platform) !== -1) {
+                os = 'iOS';
+                /*video = <video id="vids"
+                             controls="true"
+                            playsinline autoplay muted loop
+                            preload="auto" type='video/{{this.extension}}; codecs="avc1.42E01E, mp4a.40.2"'
+                            style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" >
+                            <source src={{url}} type="video/{{this.extension}}">
+                    </video>*/
+            } else if (windowsPlatforms.indexOf(platform) !== -1) {
+                os = 'Windows';
+            } else if (/Android/.test(userAgent)) {
+                os = 'Android';
+            } else if (!os && /Linux/.test(platform)) {
+                os = 'Linux';
+            }
 
-  return os;
-}
+            return os;
+        }
 
-
-        if (Hls.isSupported()) {
+        var video = document.getElementById(id);
+        /*video.src = url;*/
+        //video.type = 'application/x-mpegURL'
+        if (video.paused == true) {
+            $(`#${id}`).html(`<source src="${url}" type='application/x-mpegURL'>`);
+            var vids = videojs(id);
+            vids.play();
+        }
+        /*if (Hls.isSupported()) {
             
             var video = document.getElementById(id);
             alert(getOS(video));
@@ -53,7 +60,7 @@
             hls.on(Hls.Events.MANIFEST_PARSED, function () {
                 video.play();
             });
-        }
+        }*/
     }
 </script>
 <div class="container align-items-center justify-content-center"

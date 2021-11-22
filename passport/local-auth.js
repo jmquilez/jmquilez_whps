@@ -85,24 +85,28 @@ passport.use('postafile', new customStrat(
             } else if (ext == '.mp4' || ext == '.avi' || ext == '.wmv' || ext == '.flv' || ext == '.mkv' || ext == '.f4v' || ext == '.avchd' || ext == '.swf' || ext == '.webm' || ext == '.mpeg-2') {
                 newPost.filetype = 'video';
                 newPost.extension = ext.substring(1, ext.length);
-                if (req.body.checkerboard) {
-                    newPost.isHLSCoded = false
-                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
-                } else {
+                if (req.body.btncheck1) {
                     newPost.isHLSCoded = true
                     newPost.url = `https://storage.googleapis.com/jmquilez/${serp}/${serp}.m3u8`;
+                    console.log('checker: ', req.body.checkerboard);
+                } else {
+                    newPost.isHLSCoded = false
+                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
+                    console.log('checker: ', req.body.checkerboard);
                 }
                 console.log(ext)
                 console.log('video')
             } else if (ext == '.mov' || ext == '.MOV') {
                 newPost.filetype = 'video';
                 newPost.extension = 'mp4';
-                if (req.body.checkerboard) {
-                    newPost.isHLSCoded = false
-                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
-                } else {
+                if (req.body.btncheck1) {
                     newPost.isHLSCoded = true
                     newPost.url = `https://storage.googleapis.com/jmquilez/${serp}/${serp}.m3u8`;
+                    console.log('checker: ', req.body.checkerboard);
+                } else {
+                    newPost.isHLSCoded = false
+                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
+                    console.log('checker: ', req.body.checkerboard);
                 }
                 console.log("nope")
                 //res.status(400).send('Only videos, photos, gifs or pdfs');
