@@ -189,6 +189,7 @@ passport.use('new_register', new customStrat(
         if (req.files != undefined) {
             files.forEach(x => {
                 fs.writeFile(path.resolve(__dirname, `../test/${x.originalname}`), x.buffer, function(err) {
+                    console.log('erroriendo');
                     console.error(err);
                 })
                 filePaths.push(path.resolve(__dirname, `../test/${x.originalname}`));
