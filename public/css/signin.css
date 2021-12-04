@@ -1,10 +1,119 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo+2&display=swap');
-
-body, html {
+body,
+html {
     margin: 0px;
     padding: 0px;
     margin-bottom: 0px;
 }
+
+#form5Exampls21,
+#form5Exampls22,
+#form5Example23 {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-right: auto;
+    height: 40px;
+    margin-top: 20px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: auto;
+}
+
+#form5Exampls23:hover {
+    background-color: rgb(125, 250, 131);
+}
+
+
+/*input[type='text'] {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-right: 30px;
+    height: 40px;
+    margin-top: 20px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: 30px;*/
+
+
+/*padding: 0px;*/
+
+
+/*}*/
+
+
+/*#form5Exampls21:hover::-webkit-input-placeholder,
+#form5Exampls22:hover::-webkit-input-placeholder,
+#form5Exampls23:hover::-webkit-input-placeholder {
+    
+    font-family: 'Exo 2', sans-serif;
+    color: white
+}
+
+#form5Exampls21::-webkit-input-placeholder,
+#form5Exampls22::-webkit-input-placeholder,
+#form5Exampls23::-webkit-input-placeholder {
+    
+    font-family: 'Exo 2', sans-serif;
+    color: rgb(74, 241, 82);
+}*/
+
+
+/*#form5Exampls24 {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-right: auto;
+    height: 40px;
+    margin-top: 20px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: auto;
+}*/
+
+
+/*#form5Exampls25 {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-right: auto;
+    height: 40px;
+    margin-top: 20px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: auto;
+}
+
+#form5Exampls26 {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-right: auto;
+    height: 40px;
+    margin-top: 20px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: auto;
+    color: rgb(74, 241, 82);
+    overflow: hidden;
+    width: 100%;
+    line-height: 20px;
+}
+
+#form5Exampls27 {
+    background-color: white;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-right: auto;
+    height: 40px;
+    margin-top: 20px;
+    text-indent: 0px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: auto;
+    line-height: 0px;
+}*/
 
 #formulaire {
     display: flex;
@@ -16,24 +125,11 @@ body, html {
     font-size: large;
     width: 29vw;
     margin: auto;
-    background: rgb(28,177,168);
-    background: linear-gradient(90deg, rgba(28,177,168,1) 0%, rgba(50,213,69,1) 35%, rgba(0,255,188,1) 100%);
+    background: rgb(28, 177, 168);
+    background: linear-gradient(90deg, rgba(28, 177, 168, 1) 0%, rgba(50, 213, 69, 1) 35%, rgba(0, 255, 188, 1) 100%);
     margin-top: 35px;
     margin-bottom: 35px;
     -webkit-margin-collapse: separate;
-}
-
-input[type='text'] {
-    background-color: white;
-    margin-bottom: 10px;
-    margin-right: 30px;
-    height: 40px;
-    margin-top: 20px;
-    text-indent: 10px;
-    border-radius: 5px;
-    border-width: 0px;
-    margin-left: 30px;
-    padding: 1px;
 }
 
 input[type="text"]:hover {
@@ -61,37 +157,55 @@ input[type="color"]:hover {
     background-color: rgb(125, 250, 131);
 }
 
-input[type="submit"]:hover {
+#subm:hover {
     background-color: rgb(125, 250, 131);
     color: white;
 }
 
-input[type="text"]:hover::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+#subm::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
     font-family: 'Exo 2', sans-serif;
-    color: white
-} 
+    color: rgb(74, 241, 82);
+}
 
-input[type="email"]:hover::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    font-family: 'Exo 2', sans-serif;
-    color: white
-} 
-
-input[type="password"]:hover::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+#subm:hover::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
     font-family: 'Exo 2', sans-serif;
     color: white
 }
 
-input[type="text"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+input[type="text"]:hover::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    font-family: 'Exo 2', sans-serif;
+    color: white
+}
+
+input[type="email"]:hover::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    font-family: 'Exo 2', sans-serif;
+    color: white
+}
+
+input[type="password"]:hover::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    font-family: 'Exo 2', sans-serif;
+    color: white
+}
+
+input[type="text"]::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
     font-family: 'Exo 2', sans-serif;
     color: rgb(74, 241, 82);
-} 
+}
 
-input[type="email"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+input[type="email"]::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
     font-family: 'Exo 2', sans-serif;
     color: rgb(74, 241, 82);
-} 
+}
 
-input[type="password"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+input[type="password"]::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
     font-family: 'Exo 2', sans-serif;
     color: rgb(74, 241, 82);
 }
@@ -114,12 +228,38 @@ input[type="password"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     margin-bottom: 0vh;
 }
 
-input[type='email'] {
+#subm {
+    color: rgb(74, 241, 82);
+    background-color: white;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: 30px;
+    height: 40px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: 30px;
+}
+
+.theinput {
     background-color: white;
     margin-bottom: 10px;
     margin-right: 30px;
     height: 40px;
-    margin-top: 20px;
+    margin-top: 10px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: 30px;
+}
+
+
+/*input[type='email'] {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-right: 30px;
+    height: 40px;
+    margin-top: 0px;
     text-indent: 10px;
     border-radius: 5px;
     border-width: 0px;
@@ -128,15 +268,38 @@ input[type='email'] {
 
 input[type='password'] {
     background-color: white;
-    margin-bottom: 10px;
-    margin-top: 20px;
+    margin-bottom: 10px;*/
+
+
+/*margin-top: 20px;*/
+
+
+/*margin-top: 0px;
     margin-right: 30px;
     height: 40px;
     text-indent: 10px;
     border-radius: 5px;
     border-width: 0px;
     margin-left: 30px;
-}
+}*/
+
+
+/*input[type='text'] {
+    background-color: white;
+    margin-bottom: 10px;
+    margin-right: 30px;
+    height: 40px;
+    margin-top: 20px;
+    text-indent: 10px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: 30px;*/
+
+
+/*padding: 0px;*/
+
+
+/*}*/
 
 input[type="radio"] {
     background-color: white;
@@ -166,7 +329,8 @@ input[type='date'] {
     color: rgb(74, 241, 82);
 }
 
-input[type='submit'] {
+
+/*input[type='submit'] {
     margin-left: 30px;
     margin-bottom: 10px;
     margin-top: 10px;
@@ -178,7 +342,7 @@ input[type='submit'] {
     font-family: 'Exo 2', sans-serif;
     border-radius: 5px;
     color: rgb(74, 241, 82);
-}
+}*/
 
 input[type='color'] {
     background-color: white;
@@ -195,21 +359,16 @@ input[type='color'] {
     -webkit-appearance: none;
 }
 
-input[type="color"]::-webkit-color-swatch-wrapper {
-	
-}
-input[type="color"]::-webkit-color-swatch {
-	
-}
+input[type="color"]::-webkit-color-swatch-wrapper {}
+
+input[type="color"]::-webkit-color-swatch {}
 
 .select {
     width: 600px;
     margin-right: 30px;
 }
 
-.bodys {
-    
-}
+.bodys {}
 
 .csrp {
     display: flex;
@@ -234,6 +393,7 @@ input {
     border-width: 0px;
 }
 
+
 /*#input {
     margin-left: 30px;
     border-radius: 5px;
@@ -254,6 +414,4 @@ input {
     margin-bottom: 10px;
 }
 
-.Radio-Input {
-    
-}
+.Radio-Input {}

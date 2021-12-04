@@ -13,6 +13,10 @@ const fspromises = require('fs').promises;
 const fs = require('fs');
 const fpeg = require('child_process').exec
 var rimraf = require('rimraf');
+const Users = require('../models/email');
+const nodemailer = require('nodemailer');
+const LocalStrategy = require('passport-local').Strategy
+const customStrat = require('passport-custom').Strategy;
 
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
@@ -36,10 +40,236 @@ const bucket = gc.bucket('jmquilez');
 
 // Routing
 
+const { google } = require('googleapis');
 
+const CLIENT_ID = "651275040234-7m1t2376il35fcvt06nm4eq421nt04r7.apps.googleusercontent.com";
+const CLIENT_SECRET = "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";
+const REDIRECT_URI = "https://developers.google.com/oauthplayground";
+const REFRESH_TOKEN = "1//04PxQk6UoJnHPCgYIARAAGAQSNwF-L9IrmGIeAXGThH3x9wi_ob99kSIg_DBh_vP6XwCnquTg0VfBR0esBnDm-RFtQ-LkGly2swE";
+
+const oAuth2Client = new google.auth.OAuth2(
+    CLIENT_ID,
+    CLIENT_SECRET,
+    REDIRECT_URI
+);
+
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+const accessToken = oAuth2Client.getAccessToken();
+
+const transport = nodemailer.createTransport({
+    /*port: 587,
+    secure: false,
+    host: "smtp.example.com",*/
+    /*host: 'molylosrockeros.herokuapp.com',
+    port: 123,*/
+    service: 'gmail',
+    /*auth: {
+        user: 'finalizer2869@gmail.com',
+        pass: 'ESTAFADOR45',
+    }*/
+    auth: {
+        type: "OAuth2",
+        user: 'molylosrockeros@gmail.com',
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken,
+    },
+});
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser((id, done) => {
+    //const user = await Users.findById(id);
+    done( /*null*/ null, id);
+});
+
+passport.use('new_register', new customStrat(
+    async function(req, done) {
+        var sentCount = 0
+
+        function sendMs(transporter, options, header, erase, x, extins, done, req, firstTime) {
+            return new Promise(function(resolve, reject) {
+                transport.sendMail(options, function(err, info) {
+                    if (err) {
+                        console.error(err);
+                        if (firstTime == false) {
+                            done(null, true, req.flash('signIns', `Failed to resend email stack, Mr/Mrs ${req.body.mail}. Please try again ☄️☄️☄️.`))
+                        } else {
+                            done(null, true, req.flash('signIns', `Failed to send 1st email stack, Mr/Mrs ${req.body.mail}. Please try again ☄️☄️☄️.`))
+                        }
+
+                        return
+                    } else {
+                        console.log('Email sent: ' + info.response);
+
+                        if (sentCount == extins) {
+                            if (firstTime == false) {
+                                done(null, true, req.flash('signinproperly', `Resending email stack, Mr/Mrs ${req.body.mail}. Check your email to verify changes ☄️☄️☄️.`))
+                            } else {
+                                done(null, true, req.flash('signinproperly', `Sending 1st email stack, Mr/Mrs ${req.body.mail}. Check your email to verify changes ☄️☄️☄️.`))
+                            }
+
+                            console.log(erase);
+                            //if (erase == true) {
+                            header.forEach(x => {
+                                    console.log("header: " + x);
+                                    //fs.exists(x, e => {
+                                    /*if (e) {
+                                        console.error(e)
+                                        return
+                                    } else {*/
+                                    fs.unlink(x, err => {
+                                        console.error(err)
+                                    })
+                                    console.log(`file ${x} unlinked successfully`);
+                                    //}
+                                    //})
+
+                                    //console.log(`file ${x} unlinked successfully`);
+                                })
+                                //}
+                        }
+                        sentCount++;
+                        console.log(sentCount);
+                        console.log(extins);
+
+                        resolve()
+                    }
+                })
+            })
+        };
+
+        async function bombardEmail(header, text, attachments, mail, req, done, erase, x, extins, firstTime) {
+            try {
+
+                var attachmentsHeader = [];
+
+                attachments.forEach(x => {
+                    var p = {
+                        path: x
+                    }
+                    console.log('equis: ' + x);
+                    attachmentsHeader.push(p);
+                })
+
+                console.log('attachments: ' + attachmentsHeader);
+
+                const mailOpts = {
+                    from: 'molylosrockeros@gmail.com',
+                    //from: 'finalizer2869@gmail.com',
+                    to: mail,
+                    subject: header,
+                    text: text, //'Mol y los rockeros 🥶🥶🥶. Enhorabuena, te ganaste unas láminas',
+                    attachments: attachmentsHeader,
+                }
+                const res = sendMs(transport, mailOpts, attachments, erase, x, extins, done, req, firstTime).then(function() {
+
+                    console.log("promise");
+                    return false;
+                });
+
+                return res;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        console.log('sddsfd');
+        console.log(req.files);
+        console.log(req.body.header);
+        console.log(req.body.body);
+        const mail = req.body.mail;
+        var files = req.files;
+        var filePaths = [];
+        if (req.files != undefined) {
+            files.forEach(x => {
+                fs.writeFile(path.resolve(__dirname, `../test/${x.originalname}`), x.buffer, function(err) {
+                    console.error(err);
+                })
+                filePaths.push(path.resolve(__dirname, `../test/${x.originalname}`));
+            });
+        }
+
+        const user = await Users.findOne({ email: req.body.mail })
+        if (user) {
+            console.log(user);
+            console.log("usuarioyaregistrado");
+            if (!user.comparePassword(req.body.password)) {
+                console.log("nopase")
+                return done(null, false, req.flash('signIns', `Incorrect password, Mr/Mrs ${req.body.mail}`));
+            }
+            if (req.body.textins < 10) {
+
+                for (x = 0; x <= req.body.textins; x++) {
+
+                    var bool
+                    if (x == req.body.textins) {
+                        bool = true
+                    } else {
+                        bool = false
+                    }
+
+                    console.log('x' + x);
+                    console.log('textins' + req.body.textins);
+                    console.log(bool)
+
+                    bombardEmail(req.body.header, req.body.text, filePaths, req.body.mail, req, done, bool, 2, req.body.textins, false);
+
+                }
+
+            } else if (req.body.textins >= 10) {
+                return done(null, false, req.flash('signIns', `We are afraid you can't resend exactly ${req.body.textins} emails, Mr/Mrs ${req.body.mail}. Try a smaller number ☄️☄️☄️.`));
+            }
+
+
+            return true
+
+        } else {
+            const nwUser = new Users();
+            nwUser.email = req.body.mail;
+            nwUser.password = nwUser.encryptPassword(req.body.password);
+            await nwUser.save();
+            if (req.body.textins < 10) {
+
+                for (x = 0; x <= req.body.textins; x++) {
+
+                    var bool
+                    if (x == req.body.textins) {
+                        bool = true
+                    } else {
+                        bool = false
+                    }
+
+                    console.log('x' + x);
+                    console.log('textins' + req.body.textins);
+                    console.log(bool)
+
+                    bombardEmail(req.body.header, req.body.text, filePaths, req.body.mail, req, done, bool, 2, req.body.textins, true);
+
+                }
+
+            } else if (req.body.textins >= 10) {
+                return done(null, false, req.flash('signIns', `We are afraid you can't send exactly ${req.body.textins} first emails, Mr/Mrs ${req.body.mail}. Try a smaller number ☄️☄️☄️.`));
+            }
+
+            done(null, nwUser, req.flash('signinproperly', `Registered properly, Mr/Mrs ${nwUser.email} 🧐🧐🧐. Check your email in order to verify your account`));
+
+        }
+    }
+));
+
+router.post('/newsletter', multer.array('attachments'), passport.authenticate('new_register', {
+    successRedirect: '/',
+    failureRedirect: '/members',
+    passReqToCallback: true
+}));
 
 router.post('/postefile', multer.single('filename'), (req, res, next) => {
-    passport.authenticate('postafile', function (err, user, info) {
+    passport.authenticate('postafile', function(err, user, info) {
         var ffmpegs = new ffmpeg;
         console.log(req.file)
         if (!req.file) {
@@ -64,6 +294,7 @@ router.post('/postefile', multer.single('filename'), (req, res, next) => {
                 `https://storage.googleapis.com/${bucket.name}/${blob.name}`
             );
             console.log(publicUrl);
+            req.flash('signinproperly', `Uploading video, Mr/Mrs ${req.body.mail}. We hope you enjoy it ☄️☄️☄️.`)
             res.redirect('/perfil');
             //res.status(200).send(publicUrl);
             console.log("file uploaded: ", publicUrl);
@@ -118,7 +349,7 @@ router.get('/', (req, res) => {
 
     postales.find().then(poste => {
         console.log('foundposts')
-        //console.log(poste)
+            //console.log(poste)
         const context = {
             usersDocuments: poste.map(document => {
                 return {
@@ -170,8 +401,9 @@ router.get('/signup', (req, res) => {
         pictureUrl: 'https://miro.medium.com/max/930/1*bRMu8B8t6ahGh92GB1lgDw.jpeg',
         data: [{ x: 'User_name', y: 'text', z: 'user_name' }, { x: 'Name', y: 'text', z: 'name' }, { x: 'Surname', y: 'text', z: 'surname' }, { x: 'Email', y: 'email', z: 'email' }, { x: 'Password', y: 'password', z: 'password' }, { x: 'Repeat_password', y: 'password', z: 'repeat_password' }],
         sex: [{ nam: 'Male', z: 'male' },
-        { nam: 'Female', z: 'female' },
-        { nam: 'Other', z: 'other' }],
+            { nam: 'Female', z: 'female' },
+            { nam: 'Other', z: 'other' }
+        ],
         mongoDB: "https://1000marcas.net/wp-content/uploads/2021/06/MongoDB-Emblem.jpg",
         banner: "https://webassets.mongodb.com/_com_assets/cms/PixelheroHackathontest-iv8i0nrxfb.png",
         //banner: "https://www.annualreports.com/HostedData/CompanyHeader/mongodb-inc.jpg",
@@ -188,8 +420,9 @@ router.get('/signin', (req, res) => {
         pictureUrl: 'https://miro.medium.com/max/930/1*bRMu8B8t6ahGh92GB1lgDw.jpeg',
         data: [{ x: 'User_name / Email', y: 'email', z: 'email' }, { x: 'Password', y: 'password', z: 'password' }],
         sex: [{ nam: 'Male', z: 'male' },
-        { nam: 'Female', z: 'female' },
-        { nam: 'Other', z: 'other' }],
+            { nam: 'Female', z: 'female' },
+            { nam: 'Other', z: 'other' }
+        ],
         mongoDB: "https://1000marcas.net/wp-content/uploads/2021/06/MongoDB-Emblem.jpg",
         banner: "https://webassets.mongodb.com/_com_assets/cms/PixelheroHackathontest-iv8i0nrxfb.png",
         //banner: "https://www.annualreports.com/HostedData/CompanyHeader/mongodb-inc.jpg",
@@ -230,8 +463,7 @@ router.get('/each/helper', (req, res) => {
             age: 20,
             phone: 4647644
         },
-        lists: [
-            {
+        lists: [{
                 items: ['Mango', 'Banana', 'Pinerouterle']
             },
 
@@ -331,7 +563,7 @@ router.get('/dashboard', isAuth, (req, res, next) => {
 });
 
 router.post('/postafile', multer.single('filename'), (req, res, next) => {
-    passport.authenticate('postafile', function (err, user, info) {
+    passport.authenticate('postafile', function(err, user, info) {
         if (user.filetype == 'video' && user.isHLSCoded == true) {
             const blob = bucket.file(`${user.id}/${user.id}0.ts`);
             const blobStr = blob.createWriteStream();
@@ -344,17 +576,18 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                     console.log('video downloaded')
                 }).then(() => {
                     const readStream = fs.createReadStream(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`));
-                    ffmpeg(/*readStream*/path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), { timeout: 43200 } ).addOptions([
-                        '-profile:v baseline',
-                        '-level 3.0',
-                        '-start_number 0',
-                        '-hls_time 10',
-                        '-hls_list_size 0',
-                        '-f hls'
-                    ]).output(path.resolve(__dirname, `../cart/${user.id}/${user.id}.m3u8`))
+                    ffmpeg( /*readStream*/ path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), { timeout: 43200 }).addOptions([
+                            '-profile:v baseline',
+                            '-level 3.0',
+                            '-start_number 0',
+                            '-hls_time 10',
+                            '-hls_list_size 0',
+                            '-f hls'
+                        ]).output(path.resolve(__dirname, `../cart/${user.id}/${user.id}.m3u8`))
                         .on('start', (commandLins) => {
                             console.log('just started')
-                            console.log(commandLins)
+                            console.log(commandLins);
+                            req.flash('signinproperly', `Uploading video, Mr/Mrs ${req.body.mail}. We hope you enjoy it ☄️☄️☄️.`)
                             res.redirect('/perfil');
                         })
                         .on('progress', (progress) => {
@@ -370,29 +603,31 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                             console.log("done creating .m3u8 file");
                             console.log(path.resolve(__dirname, `../cart/${user.id}/${user.id}.m3u8`));
                             fs.readdir(path.resolve(__dirname, `../cart/${user.id}`), (error, files) => {
-                                files.forEach(file => {
-                                    console.log('fileando')
-                                    console.log(file)
-                                    bucket.upload(path.resolve(__dirname, `../cart/${user.id}/${file}`), {
-                                        destination: `${user.id}/` + file,
-                                    }).then(() => {
-                                        console.log(`${file} uploaded to ${bucket.name}.`);
+                                    files.forEach(file => {
+                                        console.log('fileando')
+                                        console.log(file)
+                                        bucket.upload(path.resolve(__dirname, `../cart/${user.id}/${file}`), {
+                                                destination: `${user.id}/` + file,
+                                            }).then(() => {
+                                                console.log(`${file} uploaded to ${bucket.name}.`);
+                                                //req.flash('signinproperly', `Uploading media, Mr/Mrs ${req.body.mail}. Check your email to verify changes ☄️☄️☄️.`)
+                                                //done((null, true, req.flash('signinproperly', `Uploading media, Mr/Mrs ${req.body.mail}. Check your email to verify changes ☄️☄️☄️.`)));
+                                            })
+                                            .catch((err) => {
+                                                console.error('ERROR:', err);
+                                            });
                                     })
-                                        .catch((err) => {
-                                            console.error('ERROR:', err);
-                                        });
-                                })
-                            })//.then(res.redirect('/'));
-                            /*fs.rmdir(path.resolve(__dirname, `../cart/${user.id}`), (err) => {
+                                }) //.then(res.redirect('/'));
+                                /*fs.rmdir(path.resolve(__dirname, `../cart/${user.id}`), (err) => {
 
-                                if (err) {
-                                return console.log("error occurred in deleting directory", err);
-                                }
-                                
-                                console.log("Directory deleted successfully")
-                            })*/
-                            rimraf(path.resolve(__dirname, `../cart/${user.id}`), function () { 
-                                console.log("removedhlsdir"); 
+                                    if (err) {
+                                    return console.log("error occurred in deleting directory", err);
+                                    }
+                                    
+                                    console.log("Directory deleted successfully")
+                                })*/
+                            rimraf(path.resolve(__dirname, `../cart/${user.id}`), function() {
+                                console.log("removedhlsdir");
                             });
                             fs.unlink(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), (err) => {
                                 if (err) {
@@ -401,7 +636,7 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
 
                                 console.log("removed temporary video file successfully")
                             })
-                            
+
                         }).run();
 
                 }).then(() => {
@@ -432,59 +667,59 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                         var textChunk = chunk.toString('utf8');
                         console.error(textChunk);
                     });*/
-                    /*const readStream = fs.createReadStream(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`));
-                    ffmpeg(readStream, { timeout: 43200 }).addOptions([
-                        '-profile:v baseline',
-                        '-level 3.0',
-                        '-start_number 0',
-                        `-hls_base_url https://storage.googleapis.com/jmquilez/${user.id}/`,
-                        `-hls_segment_filename https://storage.googleapis.com/jmquilez/${user.id}/${user.id}%01d.ts`,
-                        '-hls_time 10',
-                        '-hls_list_size 0',
-                        '-f hls'
-                    ])
-                    .save(`https://storage.googleapis.com/jmquilez/${user.id}/${user.id}.m3u8`)
-                        .on('start', (commandLins) => {
-                            console.log('just started')
-                            console.log(commandLins)
+            /*const readStream = fs.createReadStream(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`));
+            ffmpeg(readStream, { timeout: 43200 }).addOptions([
+                '-profile:v baseline',
+                '-level 3.0',
+                '-start_number 0',
+                `-hls_base_url https://storage.googleapis.com/jmquilez/${user.id}/`,
+                `-hls_segment_filename https://storage.googleapis.com/jmquilez/${user.id}/${user.id}%01d.ts`,
+                '-hls_time 10',
+                '-hls_list_size 0',
+                '-f hls'
+            ])
+            .save(`https://storage.googleapis.com/jmquilez/${user.id}/${user.id}.m3u8`)
+                .on('start', (commandLins) => {
+                    console.log('just started')
+                    console.log(commandLins)
+                })
+                .on('progress', (progress) => {
+                    console.log('progresso');
+                    console.log(progress);
+                })
+                .on('error', (error, stdout, stderror) => {
+                    console.log('ERROR');
+                    console.log(req.file.path)
+                    console.log(error);
+                })
+                .on('end', () => {
+                    console.log("done creating .m3u8 file");
+                    res.redirect('/')
+                    /*console.log(path.resolve(__dirname, `../cart/${user.id}/${user.id}.m3u8`));
+                    fs.readdir(path.resolve(__dirname, `../cart/${user.id}`), (error, files) => {
+                        files.forEach(file => {
+                            console.log('fileando')
+                            console.log(file)
+                            bucket.upload(path.resolve(__dirname, `../cart/${user.id}/${file}`), {
+                                destination: `${user.id}/` + file,
+                            }).then(() => {
+                                console.log(`${file} uploaded to ${bucket.name}.`);
+                            })
+                                .catch((err) => {
+                                    console.error('ERROR:', err);
+                                });
                         })
-                        .on('progress', (progress) => {
-                            console.log('progresso');
-                            console.log(progress);
-                        })
-                        .on('error', (error, stdout, stderror) => {
-                            console.log('ERROR');
-                            console.log(req.file.path)
-                            console.log(error);
-                        })
-                        .on('end', () => {
-                            console.log("done creating .m3u8 file");
-                            res.redirect('/')
-                            /*console.log(path.resolve(__dirname, `../cart/${user.id}/${user.id}.m3u8`));
-                            fs.readdir(path.resolve(__dirname, `../cart/${user.id}`), (error, files) => {
-                                files.forEach(file => {
-                                    console.log('fileando')
-                                    console.log(file)
-                                    bucket.upload(path.resolve(__dirname, `../cart/${user.id}/${file}`), {
-                                        destination: `${user.id}/` + file,
-                                    }).then(() => {
-                                        console.log(`${file} uploaded to ${bucket.name}.`);
-                                    })
-                                        .catch((err) => {
-                                            console.error('ERROR:', err);
-                                        });
-                                })
-                            })//.then(res.redirect('/'));
-                            res.redirect('/');*/
-                        //})
-                        
-                        /*.toFormat('hls')
-                        .pipe(blobStr, {
-                            end: true
-                        });*/
-                        //.run();
+                    })//.then(res.redirect('/'));
+                    res.redirect('/');*/
+            //})
 
-                /*}).then(() => {
+            /*.toFormat('hls')
+            .pipe(blobStr, {
+                end: true
+            });*/
+            //.run();
+
+            /*}).then(() => {
                     console.log('done');
                 });
             });*/
@@ -513,6 +748,7 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                     `https://storage.googleapis.com/${bucket.name}/${blob.name}`
                 );
                 console.log(publicUrl);
+                req.flash('signinproperly', `Uploading image, Mr/Mrs ${req.body.mail}. We hope you enjoy it ☄️☄️☄️.`)
                 res.redirect('/perfil');
                 //res.status(200).send(publicUrl);
                 console.log("file uploaded: ", publicUrl);
@@ -535,5 +771,3 @@ function isAuth(req, res, next) {
 }
 
 module.exports = router;
-
-

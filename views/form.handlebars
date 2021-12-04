@@ -1,7 +1,7 @@
 
 
 <div class="bodys"
-    style="background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url({{banner}}); margin-top: 0px; position: relative; height: 100%; width: 100%; margin-left: 0px; margin-bottom: 0px; padding: 1px;">
+    style="background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url({{banner}}); margin-top: 0px; position: relative; height: 100%; width: 100%; margin-left: 0px; margin-bottom: 15px; padding: 1px;">
     <!--{{#if signUps}}
     <div style="color: green; width: 600px; height: 50px; margin: auto;">{{signUps}}</div>
 
@@ -18,7 +18,7 @@
             <!--</div>-->
             {{#each data}}
             <label style="margin-top: 25px;" id="label" for={{this.z}}>{{this.x}}</label>
-            <input id={{this.z}} type={{this.y}} placeholder={{this.x}} name={{this.z}} required>
+            <input class="theinput" id={{this.z}} type={{this.y}} placeholder={{this.x}} name={{this.z}} required>
             {{/each}}
 
 
@@ -39,10 +39,10 @@
             <label style="margin-top: 30px; margin-left: 30px;" for="corl" >Color favorito</label>
             <!--<div class="select">-->
 
-            <input type="color" id="corl" name="color" required>
+            <input class="theinput" type="color" id="corl" name="color" required>
             <!--</div>-->
 
-            <input type="submit" value="Submit" required>
+            <input id="subm" type="submit" value="Submit" required>
 
         </div>
     </form>

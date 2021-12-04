@@ -1,8 +1,5 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/5.10.2/alt/video-js-cdn.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/5.10.2/video.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/3.0.2/videojs-contrib-hls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <link
   href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Asap&family=Outfit:wght@700&family=Praise&family=Varela+Round&display=swap"
@@ -74,7 +71,12 @@
     //video.type = 'application/x-mpegURL'
     if (video.paused == true) {
       $(`#${id}`).html(`<source src="${url}" type='application/x-mpegURL'>`);
+
       var vids = videojs(id);
+      vids.on('error', (err) => {
+        console.log('player error: ');
+        console.log(err);
+      });
       vids.play();
     }
 

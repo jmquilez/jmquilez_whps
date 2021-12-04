@@ -38,14 +38,14 @@ async function veris() {
     }
 }
 
-passport.serializeUser((user, done) => {
+/*passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
     const user = await User.findById(id);
     done(null, user);
-});
+});*/
 
 async function verif(req, done) {
     serie = uuid();
@@ -65,16 +65,16 @@ async function verif(req, done) {
 }
 
 passport.use('postafile', new customStrat(
-    async function (req, done) {
+    async function(req, done) {
         async function verify() {
-            console.log('requestbody',  req.body);
+            console.log('requestbody', req.body);
             const serp = uuid();
             const usap = await Bucket.findOne({ title: serp })
             if (usap) {
                 verify()
             }
             const ext = path.extname(req.file.originalname);
-            
+
             const newPost = new Bucket();
             if (ext == '.jpeg' || ext == '.jpg' || ext == '.png' || ext == '.gif' || ext == '.tiff' || ext == '.psd' || ext == '.pdf') {
                 newPost.filetype = 'image';
@@ -109,33 +109,33 @@ passport.use('postafile', new customStrat(
                     console.log('checker: ', req.body.checkerboard);
                 }
                 console.log("nope")
-                //res.status(400).send('Only videos, photos, gifs or pdfs');
+                    //res.status(400).send('Only videos, photos, gifs or pdfs');
             } else {
                 console.log("loie")
 
             }
-            
+
             //newPost.extension = ext.substring(1, ext.length);
             newPost.author = req.session.user_name;
             newPost.date = Date();
             newPost.id = serp;
-            
+
             newPost.title = req.body.titl;
             newPost.description = req.body.descr;
             newPost.likes = 0;
             console.log('iscoded', newPost.isHLSCoded)
-            
+
             await newPost.save();
             done(null, newPost, null);
         }
         verify()
-        //veris();
+            //veris();
 
     }
 ))
 
 passport.use('local-signup', new customStrat(
-    async function (req, done) {
+    async function(req, done) {
         const us = await User.findOne({ email: req.body.email });
         //console.log(us);
         if (us) {
@@ -163,7 +163,7 @@ passport.use('local-signup', new customStrat(
 ));
 
 passport.use('local-signin', new customStrat(
-    async function (req, done) {
+    async function(req, done) {
         const ues = await User.findOne({ email: req.body.email });
         if (!ues) {
             console.log("nope")
@@ -192,22 +192,22 @@ passport.use('local-signin', new customStrat(
     /*userField: 'user',
     surnameField: 'surname',
     emailField: 'email',*/
-    //passwordField: 'password',
+//passwordField: 'password',
 /*repField: 'repeat_password',
 sexField: 'sex',
 dateField: 'date',
 colorField: 'color',*/
-    //passReqToCallback: false
+//passReqToCallback: false
 //}, async (req, email, password, done/*user_name, name, surname, email, password, repeat_password, sex, date, color, done*/) => {
-    //const newUs = new User();
+//const newUs = new User();
 /*newUs.user_name = user_name;
 newUs.name = name;
 newUs.surname = surname;*/
-    //newUs.email = email;
-    //newUs.password = password;
+//newUs.email = email;
+//newUs.password = password;
 /*newUs.sex = sex;
 newUs.date = date;
 newUs.fav_color = color;*/
-    //await newUs.save();
-    //done(null, newUs);
+//await newUs.save();
+//done(null, newUs);
 //} */

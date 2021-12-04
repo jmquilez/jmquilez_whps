@@ -2,10 +2,14 @@
 <html lang="en">
 
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Architects+Daughter&family=Asap&family=Balsamiq+Sans&family=Cairo:wght@300&family=Comfortaa&family=Lobster&family=M+PLUS+Rounded+1c&family=Outfit:wght@700&family=Patrick+Hand&family=Praise&family=Smooch&family=Varela+Round&display=swap" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-a11y="true"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/5.10.2/alt/video-js-cdn.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/5.10.2/video.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/3.0.2/videojs-contrib-hls.js"></script>
+    <script src="scripts/videojs.js"<!--src="https://cdnjs.cloudflare.com/ajax/libs/video.js/5.10.2/video.js"-->></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/3.0.2/videojs-contrib-hls.js"></script>
     <script>
         function fade(element) {
             var op = 1;  // initial opacity
@@ -35,6 +39,7 @@
     <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css" integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/{{style}}">
     <!-- CSS only -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -50,27 +55,43 @@
 <body>
     <!--<div class="removemargins" style="margin:0 ! important; padding:0 ! important;"></div>-->
     <div class="container-fluid px-0 align-items-center">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 0px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 0px; font-family: 'Balsamiq Sans', cursive;">
             <div class="container-fluid" id="fluido" style="margin-left: 50px; margin-right: 20px;">
-                <a class="navbar-brand" href="/">Navbar</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                <!--<a class="navbar-brand" href="molylosrockeros.herokuapp.com">RELATED PAEGES</a>-->
+                <!--<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                </div>-->
+                <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </button>-->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            <a class="nav-link active" aria-current="page" href="/"
+                                style="font-size: medium; margin-right: 30px;">HOME</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="true">
+                                Related pages
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item"
+                                        href="https://molylosrockeros.herokuapp.com">molylosrockeros</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                            <a class="nav-link" href="/postafile">Postafile</a>
                         </li>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
+                                Pages
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/signup">Signup</a></li>
@@ -83,9 +104,9 @@
                                 <li><a class="dropdown-item" style="color: red;" href="/logout">Logout</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        <!--<li class="nav-item">
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
+                        </li>-->
                     </ul>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -124,7 +145,125 @@
         {{/if}}
         {{{ body }}}
 
+        <footer class="bg-transparent text-center text-white" style="font-family: 'M PLUS Rounded 1c', sans-serif;">
+            <!-- Grid container -->
+            <div class="container p-4">
+                <!-- Section: Social media -->
+                <section class="mb-4" style="margin-left: 0px;">
+                    <!-- Facebook -->
+                    <a style="border-radius: 500px;" class="btn btn-outline-light btn-floating m-1"
+                        href="https://es-es.facebook.com/FERNANFL00" role="button"><i class="fab fa-facebook-f"></i></a>
 
+                    <!-- Twitter -->
+                    <a style="border-radius: 500px;" class="btn btn-outline-light btn-floating m-1"
+                        href="https://twitter.com/IbaiLlanos?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
+                        role="button"><i class="fab fa-twitter"></i></a>
+
+                    <!-- Google -->
+                    <a style="border-radius: 500px;" class="btn btn-outline-light btn-floating m-1"
+                        href="https://www.google.com/search?q=kilypika&client=firefox-b-d&channel=crow5&ei=p7OnYYeJEMTKgwe8k7foCw&ved=0ahUKEwjH-KvoksP0AhVE5eAKHbzJDb0Q4dUDCA0&uact=5&oq=kilypika&gs_lcp=Cgdnd3Mtd2l6EAM6BAgAEA06BAguEA06BggAEA0QCjoGCAAQDRAeSgQIQRgBUO8DWKkSYJEUaAdwAHgAgAFPiAGVApIBATSYAQCgAQHAAQE&sclient=gws-wiz"
+                        role="button"><i class="fab fa-google"></i></a>
+
+                    <!-- Instagram -->
+                    <a style="border-radius: 500px;" class="btn btn-outline-light btn-floating m-1"
+                        href="https://www.instagram.com/eljaria_coras/?hl=es" role="button"><i
+                            class="fab fa-instagram"></i></a>
+
+                    <!-- Linkedin -->
+                    <a style="border-radius: 500px;" class="btn btn-outline-light btn-floating m-1"
+                        href="https://pe.linkedin.com/in/thegrefg-fortnite-26660620" role="button"><i
+                            class="fab fa-linkedin-in"></i></a>
+
+                    <!-- Github -->
+                    <a style="border-radius: 500px;" class="btn btn-outline-light btn-floating m-1"
+                        href="https://github.com/google" role="button"><i class="fab fa-github"></i></a>
+                </section>
+                <!-- Section: Social media -->
+
+                <!-- Section: Form -->
+                <section class="">
+                    <form action="/newsletter" method="POST" enctype="multipart/form-data" id="formtypes">
+                        <!--Grid row-->
+                        <div class="col d-flex justify-content-center">
+                            <!--Grid column-->
+                            <!--<div class="col-auto" style="margin-top: 43px;">
+                                <p class="pt-2">
+                                    <strong>Sign up for our newsletter</strong>
+                                </p>
+                            </div>-->
+                            <!--Grid column-->
+
+                            <!--Grid column-->
+
+
+                            <div class="" style="display: flex; flex-direction: column; flex: 100;">
+                                <!-- Inputs -->
+                                <div class="form-outline form-white mb-4">
+                                    <div class="col-md-30" style="padding: 0px; margin-right: auto; margin-left: auto;">
+                                        <label class="form-label" for=""
+                                            style="margin-bottom: 40px; margin-top: 0px; margin-right: auto; margin-left: auto;">Try
+                                            to bombard your friends
+                                            and enemies with an email storm</label>
+                                        <input placeholder="Mail address pleaseeee" type="email" id="form5Example21"
+                                            class="form-control" name="mail"
+                                            style="margin-right: auto; margin-left: auto;" required />
+                                        <label class="form-label" for="form5Example21"
+                                            style="margin-bottom: 20px; margin-top: 20px;">Email address</label>
+                                        <input placeholder="Custom password" type="password" id="form5Example22"
+                                            style="margin-right: auto; margin-left: auto;" class="form-control"
+                                            name="password" required />
+                                        <label class="form-label" for="form5Example22"
+                                            style="margin-bottom: 20px; margin-top: 20px;">Password</label>
+                                        <input placeholder="Mail subject" type="text" id="form5Exampls23"
+                                            class="form-control" name="header" required />
+                                        <label class="form-label" for="form5Exampls23"
+                                            style="margin-bottom: 20px; margin-top: 20px;">Subject</label>
+                                        <input placeholder="Mail body" type="text" id="form5Exampls24"
+                                            class="form-control" name="body" required />
+                                        <label class="form-label" for="form5Exampls24"
+                                            style="margin-bottom: 20px; margin-top: 20px;">Body</label>
+
+                                        <input class="form-control" type="number" id="form5Exampls25" name="textins"
+                                            placeholder="Number of mails (max n=9, will send n+1)" required>
+                                        <label class="form-label" for="form5Exampls25"
+                                            style="margin-bottom: 20px; margin-top: 20px;">Number of emails</label>
+                                        <input class="form-control" type="file" id="form5Exampls26" name="attachments"
+                                            placeholder="Choose one or more files to bombard your target" multiple>
+                                        <label class="form-label" for="form5Exampls26"
+                                            style="margin-bottom: 20px; margin-top: 20px;">Attachments (you can choose
+                                            more than one)</label>
+                                        <div style="display: flex; flex-direction: column;">
+                                            <input type="submit" value="Subscribe" class="btn btn-outline-light mb-4"
+                                                id="form5Exampls27">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--Grid row-->
+                    </form>
+
+                </section>
+                <!-- Section: Form -->
+
+                <!-- Section: Text -->
+                <section class="mb-4">
+                    <p>
+                        Bombard your enemies with emails. Enjoy 👾👾👾.
+                    </p>
+                </section>
+            </div>
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2021 Copyright:
+                <a class="text-white" href="https://jmquilez28.herokuapp.com">JMQUILEZ</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
     </div>
 
 
