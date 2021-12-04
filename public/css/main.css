@@ -46,6 +46,7 @@
 #form5Exampls25:hover,
 #form5Exampls26:hover,
 #form5Exampls27:hover {
+    font-family: 'Patrick Hand', cursive;
     background-color: rgb(125, 250, 131);
     color: white;
 }
@@ -63,9 +64,11 @@
 #form5Exampls27:-webkit-autofill {
     background-color: transparent !important;
     color: rgb(125, 250, 131) !important;
+    font-family: 'Patrick Hand', cursive;
+    border-radius: 20px;
     /*transition-property: color;*/
     /*transition: background-color 5000s ease-in-out 0s;*/
-    transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
+    transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-family 5000s ease-in-out 0s, border-radius 5000s ease-in-out 0s;
 }
 
 #form5Example21:-webkit-autofill:hover,
@@ -97,9 +100,11 @@
 #form5Exampls27:-webkit-autofill:active,
 #form5Exampls27:-webkit-autofill::after {
     background-color: transparent;
+    font-family: 'Patrick Hand', cursive;
     color: rgb(125, 250, 131) !important;
+    border-radius: 20px;
     /*transition-property: all;*/
-    transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
+    transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-family 5000s ease-in-out 0s, border-radius 5000s ease-in-out 0s;
     /*transition: color 5000s ease-in-out 0s;*/
     /*background-color: transparent !important;
     color: red !important;*/
@@ -107,6 +112,7 @@
 }
 
 #form5Exampls26:hover {
+    font-family: 'Patrick Hand', cursive !important;
     background-color: rgb(125, 250, 131);
     color: white;
 }
