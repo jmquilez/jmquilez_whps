@@ -95,6 +95,7 @@ passport.use('new_register', new customStrat(
             return new Promise(function(resolve, reject) {
                 transport.sendMail(options, function(err, info) {
                     if (err) {
+                        console.log('there was an error.')
                         console.error(err);
                         if (firstTime == false) {
                             done(null, true, req.flash('signIns', `Failed to resend email stack, Mr/Mrs ${req.body.mail}. Please try again ☄️☄️☄️.`))
