@@ -22,8 +22,8 @@ const postCtrl = require('../controllers/post');
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 const gc = new Storage({
-    keyFilename: path.join(__dirname, "../tics-332218-fa68b13dfa5d.json"),
-    projectId: 'tics-332218'
+    keyFilename: path.join(__dirname, "<JSON_FILE>"),
+    projectId: '<PROJECTID>'
 })
 
 gc.getBuckets().then(x => {
@@ -43,10 +43,10 @@ const bucket = gc.bucket('jmquilez');
 
 const { google } = require('googleapis');
 
-const CLIENT_ID = "651275040234-7m1t2376il35fcvt06nm4eq421nt04r7.apps.googleusercontent.com";
-const CLIENT_SECRET = "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";
-const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-const REFRESH_TOKEN = "1//04PxQk6UoJnHPCgYIARAAGAQSNwF-L9IrmGIeAXGThH3x9wi_ob99kSIg_DBh_vP6XwCnquTg0VfBR0esBnDm-RFtQ-LkGly2swE";
+const CLIENT_ID = "<CLIENT_ID>";
+const CLIENT_SECRET = "<CLIENT_SECRET>";
+const REDIRECT_URI = "<REDIRECT_URI>";
+const REFRESH_TOKEN = "<REFRESH_TOKEN>";
 
 const oAuth2Client = new google.auth.OAuth2(
     CLIENT_ID,
@@ -67,7 +67,7 @@ const transport = nodemailer.createTransport({
     service: 'gmail',
     /*auth: {
         user: 'finalizer2869@gmail.com',
-        pass: 'ESTAFADOR45',
+        pass: 'PASSWORD',
     }*/
     auth: {
         type: "OAuth2",
