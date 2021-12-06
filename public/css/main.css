@@ -121,7 +121,7 @@
     #form5Exampls25:-webkit-autofill::after,
     #form5Exampls26:-webkit-autofill::after,
     #form5Exampls27:-webkit-autofill::after {
-        background-color: transparent imort !important;
+        background-color: transparent !important;
         color: transparent !important;
         transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-family 0s ease-in-out 0s;
     }
