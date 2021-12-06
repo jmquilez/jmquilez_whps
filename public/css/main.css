@@ -71,8 +71,8 @@
     #form5Exampls25:-webkit-autofill,
     #form5Exampls26:-webkit-autofill,
     #form5Exampls27:-webkit-autofill {
-        background-color: transparent !important;
-        color: transparent !important;
+        background-color: red !important;
+        color: red !important;
         /*color: rgb(125, 250, 131) !important;*/
         font-family: 'Patrick Hand', cursive;
         border-radius: 20px;
