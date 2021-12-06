@@ -63,7 +63,8 @@
         background-image: none !important;
         filter: brightness(0.4);
     }
-    /*#form5Example21:-webkit-autofill,
+    
+    #form5Example21:-webkit-autofill,
     #form5Example22:-webkit-autofill,
     #form5Exampls23:-webkit-autofill,
     #form5Exampls24:-webkit-autofill,
@@ -71,13 +72,14 @@
     #form5Exampls26:-webkit-autofill,
     #form5Exampls27:-webkit-autofill {
         background-color: transparent !important;
-        color: rgb(125, 250, 131) !important;
+        color: transparent !important;
+        /*color: rgb(125, 250, 131) !important;*/
         font-family: 'Patrick Hand', cursive;
         border-radius: 20px;
         /*transition-property: color;*/
-    /*transition: background-color 5000s ease-in-out 0s;*/
-    /*transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-family 5000s ease-in-out 0s, border-radius 5000s ease-in-out 0s;
-    }*/
+        /*transition: background-color 5000s ease-in-out 0s;*/
+        transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-family 5000s ease-in-out 0s, border-radius 5000s ease-in-out 0s;
+    }
     /*??#form5Example21:-webkit-autofill::backdrop*/
     
     #form5Example21:-webkit-autofill:hover,
