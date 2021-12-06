@@ -97,6 +97,21 @@
         transition: background-color 0s ease-in-out 0s, color 0s ease-in-out 0s, font-family 0s ease-in-out 0s, border-radius 0s ease-in-out 0s;
     }
     
+    #form5Example21:valid,
+    #form5Example22:valid,
+    #form5Exampls23:valid,
+    #form5Exampls24:valid,
+    #form5Exampls25:valid,
+    #form5Exampls27:valid {
+        background-color: rgb(29, 202, 255);
+        color: white;
+    }
+    
+    #form5Exampls26::-webkit-file-upload-button {
+        background-color: rgb(29, 202, 255);
+        color: white;
+    }
+    
     #form5Example21:-webkit-autofill:hover,
     #form5Example21:-webkit-autofill:focus,
     #form5Example21:-webkit-autofill:active,
