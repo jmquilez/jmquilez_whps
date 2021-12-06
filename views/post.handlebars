@@ -1,0 +1,178 @@
+<head>
+    <meta charset="UTF-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/5.10.2/alt/video-js-cdn.css" rel="stylesheet">
+    <script src="/scripts/videojs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/3.0.2/videojs-contrib-hls.js"></script>
+    <link href="https://unpkg.com/@videojs/themes@1/dist/city/index.css" rel="stylesheet">
+
+    <!-- Fantasy -->
+    <link href="https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css" rel="stylesheet">
+
+    <!-- Forest -->
+    <link href="https://unpkg.com/@videojs/themes@1/dist/forest/index.css" rel="stylesheet">
+
+    <!-- Sea -->
+    <link href="https://unpkg.com/@videojs/themes@1/dist/sea/index.css" rel="stylesheet">
+    <!--<script src='https://vjs.zencdn.net/7.6.5/video.js'></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/5.10.2/video.js"></script>-->
+</head>
+
+<script>
+    //import video from 'videojs-contrib-hls';
+    function createIt(id, url, nail) {
+        console.log('nail');
+        console.log(nail)
+        function getOS() {
+            var userAgent = window.navigator.userAgent,
+                platform = window.navigator.platform,
+                macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+                windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+                iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+                os = null;
+
+            if (macosPlatforms.indexOf(platform) !== -1) {
+                os = 'Mac OS';
+            } else if (iosPlatforms.indexOf(platform) !== -1) {
+                os = 'iOS';
+            } else if (windowsPlatforms.indexOf(platform) !== -1) {
+                os = 'Windows';
+            } else if (/Android/.test(userAgent)) {
+                os = 'Android';
+            } else if (!os && /Linux/.test(platform)) {
+                os = 'Linux';
+            }
+
+            return os;
+        }
+
+        alert(getOS());
+
+
+        var video = document.getElementById(id);
+        video.setAttribute("controls", "controls");
+        /*var span = video.firstChild;
+        console.log('span element: ' + span.id);
+        span.remove();*/
+
+        if (video.paused == true) {
+            /*video.setAttribute("src", url);
+            video.setAttribute("type", 'application/x-mpegURL')*/
+            $(`#${id}`).html(`<source src="${url}" type='application/x-mpegURL'>`);
+            console.log('height: ' + `${video.clientHeight}px`);
+            console.log('width: ' + `${video.clientWidth}px`);
+            var height = `${video.clientHeight}px`;
+            var width = `${video.clientWidth}px`;
+            //Paris video optimal height: 226px;
+            var vids = videojs(id, {
+                fill: true,
+                responsive: true,
+                fluid: true
+            });
+            vids.on('error', (err) => {
+                console.log('player error: ');
+                console.log(err);
+            });
+            //vids.fluid(true);
+            vids.play();
+            $(`#${id}span`).css("height", height);
+            $(`#${id}span`).css("width", width);
+            /*$(`#${id}span`).css("margin-right", "auto");
+            $(`#${id}span`).css("margin-left", "auto");*/
+        }
+    }
+
+    function doit(url) {
+        console.log('theurl: ' + url);
+    }
+</script>
+
+<div
+    style="display:flex; justify-content: center; flex-direction: column; align-items:center; margin-right: auto; margin-left: auto; margin-top: 30px;">
+
+    <div class="card mt-2" style="width: 40rem; display: flex; align-items: center">
+        <div class="card-header" style="text-align: center;">
+            <h3 style="padding: 1px; margin-left: 10px; height: 40px; line-height: 50px;"><i class="fas fa-space-shuttle"
+                    style="margin-right: 10px;"></i>Possibly the best upload yet: {{postal.description}}</h3>
+        </div>
+        <div class="card-body">
+
+            {{#ifEquals postal.filetype "image"}}
+            <div class="card border-success mb-3" style="width: 30rem; padding: 1px; object-fit: contain;">
+                <div class="card-header"
+                    style="font-family: 'Varela Round', sans-serif; font-size: {{postal.text_size_part}}; text-align: center; height: 120px; display: table-cell; line-height: 90px;">
+                    {{postal.title}}</div>
+                <div class="card-body">
+                    <h4 class="card-title"
+                        style="text-align: center; font-family: 'Architects Daughter', cursive; font-size: {{postal.author_size_part}} height: 54px; line-height: 45px;">
+                        By
+                        {{postal.author}}</h4>
+                    <span id='{{this.id}}span' onclick="doit('{{postal.url}}');"
+                        style="width: 84.5%; height: 90px; margin-top: 0px; background-color: transparent;">
+                        <img src={{postal.url}}
+                            style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" />
+                    </span>
+                    <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
+                        {{postal.description}}</p>
+                </div>
+            </div>
+            {{else}}
+            {{#ifEquals postal.isHLSCoded false }}
+            <div class="card border-success mb-3" style="width: 30rem; padding: 1px; object-fit: contain;">
+                <div class="card-header"
+                    style="font-family: 'Varela Round', sans-serif; font-size: {{postal.text_size_part}}; text-align: center; height: 120px; display: table-cell; line-height: 90px;">
+                    {{postal.title}}</div>
+                <div class="card-body">
+                    <h4 class="card-title"
+                        style="text-align: center; font-family: 'Architects Daughter', cursive; font-size: {{postal.author_size_part}} height: 54px; line-height: 45px;">
+                        By
+                        {{postal.author}}</h4>
+
+                    <video controls playsinline muted loop
+                        style="object-fit: contain; width: 100%; height: 100%; margin-bottom: 10px;"
+                        poster={{postal.thumbURL}}>
+                        <source type="video/{{postal.extension}}" src={{postal.url}}>
+                    </video>
+                    <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
+                        {{postal.description}}</p>
+
+                </div>
+            </div>
+            {{else}}
+
+            <div class="card border-success mb-3" style="width: 30rem; padding: 1px; object-fit: contain;">
+                <div class="card-header"
+                    style="font-family: 'Varela Round', sans-serif; font-size: {{postal.text_size_part}}; text-align: center; height: 120px; display: table-cell; line-height: 90px;">
+                    {{postal.title}}</div>
+                <div class="card-body" style="display: flex; flex-direction: column;">
+                    <h4 class="card-title"
+                        style="text-align: center; font-family: 'Architects Daughter', cursive; font-size: {{postal.author_size_part}}; height: 54px; line-height: 45px;">
+                        By
+                        {{postal.author}}</h4>
+                    <span id='{{postal.id}}span'
+                        onclick="createIt('{{postal.id}}', '{{postal.url}}', '{{postal.thumbURL}}'); this.onclick=null;"
+                        style="width: 100%; height: 100%; margin-top: 0px; background-color: transparent; margin-right: auto; margin-left: auto;">
+                        <video id={{postal.id}} class="video-js vjs-theme-sea" preload="none" crossorigin="true"
+                            playsinline muted loop
+                            style="object-fit: contain; width: 100%; height: 100%; margin-bottom: 10px;"
+                            poster={{postal.thumbURL}}>
+
+                        </video>
+                    </span>
+
+                    <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
+                        {{postal.description}}</p>
+                </div>
+            </div>
+
+            {{/ifEquals}}
+
+            {{/ifEquals}}
+        </div>
+    </div>
+
+
+
+</div>

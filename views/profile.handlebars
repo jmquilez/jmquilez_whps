@@ -7,7 +7,9 @@
     rel="stylesheet">
 
 <script>
-    function createIt(id, url) {
+    function createIt(id, url, nail) {
+        console.log('nail');
+        console.log(nail)
         function getOS() {
             var userAgent = window.navigator.userAgent,
                 platform = window.navigator.platform,
@@ -20,13 +22,6 @@
                 os = 'Mac OS';
             } else if (iosPlatforms.indexOf(platform) !== -1) {
                 os = 'iOS';
-                /*video = <video id="vids"
-                             controls="true"
-                            playsinline autoplay muted loop
-                            preload="auto" type='video/{{this.extension}}; codecs="avc1.42E01E, mp4a.40.2"'
-                            style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" >
-                            <source src={{url}} type="video/{{this.extension}}">
-                    </video>*/
             } else if (windowsPlatforms.indexOf(platform) !== -1) {
                 os = 'Windows';
             } else if (/Android/.test(userAgent)) {
@@ -38,12 +33,18 @@
             return os;
         }
 
+        alert(getOS());
+
+
         var video = document.getElementById(id);
-        /*video.src = url;*/
-        //video.type = 'application/x-mpegURL'
+        video.setAttribute("controls", "controls");
+        var span = video.firstChild;
+        console.log('span element: ' + span.id);
+        span.remove();
+
         if (video.paused == true) {
             $(`#${id}`).html(`<source src="${url}" type='application/x-mpegURL'>`);
-            
+
             var vids = videojs(id);
             vids.on('error', (err) => {
                 console.log('player error: ');
@@ -51,22 +52,11 @@
             });
             vids.play();
         }
-        /*if (Hls.isSupported()) {
-            
-            var video = document.getElementById(id);
-            alert(getOS(video));
-            var vids = videojs(id);
-            var hls = new Hls();
-            hls.loadSource(url);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, function () {
-                video.play();
-            });
-        }*/
     }
+
 </script>
 <div class="container align-items-center justify-content-center"
-    style="padding: 1px; margin-bottom: 30px; margin-top: 30px; margin-right:auto; margin-left:auto;">
+    style="padding: 1px; margin-bottom: 30px; margin-top: 30px; margin-right:auto; margin-left:auto; align-items: center; justify-content: center;">
     <div class="card border-info mb-3" style="max-width: 100rem; padding: 1px; margin-top: 20px;">
         <div class="card-header" style="text-align: center; font-family: 'Lobster', cursive; font-size: 60px;">
             {{name}}</div>
@@ -83,88 +73,112 @@
                 volutpat dui rhoncus varius.</p>
         </div>
     </div>
-    <!--<div class="col-md-60 align-items-center justify-content-center" style="align-items: center;">-->
-    <div
-        style="display:flex; justify-content: center; flex-direction: column; align-items:center; margin-right: auto; margin-left: auto;">
-        {{#each postal}}
-        {{#ifEquals this.filetype "image"}}
-        <div class="card border-success mb-3" style="width: 30rem; padding: 1px; object-fit: contain;">
-            <div class="card-header"
-                style="font-family: 'Varela Round', sans-serif; font-size: x-large; text-align: center;">
-                {{this.title}}</div>
+    <div class="col-md-60 align-items-center justify-content-center"
+        style="align-items: center; justify-content: center; margin-right: auto; margin-left: auto;">
+        <div class="card mt-2" style="width: 55rem; margin-right: auto; margin-left: auto;">
+            <div class="card-header" style="text-align: center;">
+                <h3 style="padding: 1px; margin-left: 10px; height: 40px; line-height: 50px;"><i class="far fa-images"
+                        style="margin-right: 10px;"></i>Every
+                    upload yet</h3>
+            </div>
             <div class="card-body">
-                <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By
-                    {{this.author}}</h4>
-                <img src={{this.url}} style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" />
-                <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
-                    {{this.description}}</p>
+                <div class="row">
+                    {{#each postal}}
+                    {{#ifEquals this.filetype "image"}}
+                    <div class="col-md-4">
+                        <div class="card border-success" class="w-100 h-100"
+                            style="padding: 1px; object-fit: contain; margin-bottom: 20px;">
+                            <!--style="width: 30rem; padding: 1px; object-fit: contain;">-->
+                            
+                                <div class="card-header"
+                                    style="font-family: 'Varela Round', sans-serif; font-size: {{this.text_size}}; text-align: center; height: 60px; display: table-cell; line-height: 35px;">
+                                    <a href="/posts/{{this.id}}" class="w-100 h-100" style="text-decoration: none;">{{this.title}}</a></div>
+                            
+                            <div class="card-body">
+                                <h4 class="card-title"
+                                    style="margin-top: -15px; text-align: center; font-family: 'Architects Daughter', cursive; font-size: {{this.author_size}}; height: 27px; line-height: 30px;">
+                                    By
+                                    {{this.author}}</h4>
+                                <span id='{{this.id}}span' onclick="this.onclick=null;"
+                                    style="width: 84.5%; height: 90px; margin-top: 0px; background-color: transparent;">
+                                    <img src={{this.url}}
+                                        style="object-fit: contain; width: 100%; height: 90px; max-height: 90px; margin-bottom: 0px;"
+                                        class="w-90 h-90" />
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{else}}
+                    {{#ifEquals this.isHLSCoded false }}
+                    <div class="col-md-4">
+                        <div class="card border-success mb-3" class="w-100 h-100"
+                            style="padding: 1px; object-fit: contain; margin-bottom: 20px;">
+                            <!--style="width: 30rem; padding: 1px; object-fit: contain;">-->
+                            
+                                <div class="card-header"
+                                    style="font-family: 'Varela Round', sans-serif; font-size: {{this.text_size}}; text-align: center; height: 60px; display: table-cell; line-height: 35px;">
+                                    <a href="/posts/{{this.id}}" class="w-100 h-100" style="text-decoration: none;">{{this.title}}</a></div>
+                            
+                            <div class="card-body" style="display: flex; flex-direction: column; align-items: center;">
+
+                                <h4 class="card-title"
+                                    style="margin-top: -15px; text-align: center; font-family: 'Architects Daughter', cursive; font-size: {{this.author_size}}; height: 27px; line-height: 30px;">
+                                    By
+                                    {{this.author}}</h4>
+                                <span id='{{this.id}}span' onclick="this.onclick=null;"
+                                    style="width: 84.5%; height: 90px; margin-top: 0px; background-color: transparent;">
+                                    <video controls playsinline loop class="w-90 h-90"
+                                        style="object-fit: contain; width: 100%; height: 90px; max-height: 90px; margin-bottom: 0px;"
+                                        poster={{this.thumbURL}}>
+                                        <!--<source type="video/x-mpegURL" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">-->
+                                        <source type="video/{{this.extension}}" src={{this.url}}>
+                                    </video>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{else}}
+
+                    <div class="col-md-4">
+                        <div class="card border-success mb-3" class="w-100 h-100"
+                            style="padding: 1px; object-fit: contain; margin-bottom: 20px;">
+                            <!--style="width: 30rem; padding: 1px; object-fit: contain;"-->
+                            
+                                <div class="card-header"
+                                    style="font-family: 'Varela Round', sans-serif; font-size: {{this.text_size}}; text-align: center; height: 60px; display: table-cell; line-height: 35px;">
+                                    <a href="/posts/{{this.id}}" class="w-100 h-100" style="text-decoration: none;">{{this.title}}</a></div>
+                            
+                            <div class="card-body" style="display: flex; flex-direction: column; align-items: center;">
+                                <h4 class="card-title"
+                                    style="margin-top: -15px; text-align: center; font-family: 'Architects Daughter', cursive; font-size: {{this.author_size}}; height: 27px; line-height: 30px;">
+                                    By
+                                    {{this.author}}</h4>
+
+                                <span id='{{this.id}}span'
+                                    onclick="createIt('{{this.id}}', '{{this.url}}', '{{this.thumbURL}}'); this.onclick=null;"
+                                    style="width: 100%; height: 90px; margin-top: 0px; background-color: transparent;">
+                                    <video playsinline muted loop class="video-js vjs-theme-sea w-90 h-90" preload="none" 
+                                        crossorigin="true"
+                                        style="object-fit: contain; width: 100%; height: 100%; max-height: 90px; margin-bottom: 0px; background-color: transparent;"
+                                        id={{this.id}} poster={{this.thumbURL}}>
+
+                                    </video>
+                                    <!--data-setup='{"fluid": true}'-->
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {{/ifEquals}}
+                    <!--<button type="button" onclick="playIt()" class="btn btn-primary">Primary</button>-->
+                    {{/ifEquals}}
+                    {{/each}}
+                </div>
             </div>
         </div>
-        {{else}}
-        {{#ifEquals this.isHLSCoded false }}
-        <div class="card border-success mb-3" style="width: 30rem; padding: 1px; object-fit: contain;">
-            <div class="card-header"
-                style="font-family: 'Varela Round', sans-serif; font-size: x-large; text-align: center;">
-                {{this.title}}</div>
-            <div class="card-body">
-                <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By
-                    {{this.author}}</h4>
-                <!--<video id="vids"-->
-                <!--class="video" controls="true"-->
-                <!--controls playsinline autoplay muted loop-->
-                <!--preload="auto" type='video/{{this.extension}}; codecs="avc1.42E01E, mp4a.40.2"-->
-                <!--style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" >-->
-                <!--<source src={{this.url}} type="video/{{this.extension}}">
-        </video>-->
-                <video controls playsinline autoplay muted loop
-                    style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;">
-                    <source type="video/{{this.extension}}" src={{this.url}}>
-                </video>
-                <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
-                    {{this.description}}</p>
-                <!--<video src={{this.url}} autoplay muted></video>-->
-            </div>
-        </div>
-        {{else}}
-
-        <!--<video id="vids"-->
-        <!--class="video" controls="true"-->
-        <!--controls playsinline autoplay muted loop-->
-        <!--preload="auto" type='video/{{this.extension}}; codecs="avc1.42E01E, mp4a.40.2"-->
-        <!--style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;" >-->
-        <!--<source src={{this.url}} type="video/{{this.extension}}">
-        </video>-->
-        <div class="card border-success mb-3" style="width: 30rem; padding: 1px; object-fit: contain;">
-            <div class="card-header"
-                style="font-family: 'Varela Round', sans-serif; font-size: x-large; text-align: center;">
-                {{this.title}}</div>
-            <div class="card-body" style="display: flex; flex-direction: column;">
-                <h4 class="card-title" style="text-align: center; font-family: 'Architects Daughter', cursive;">By
-                    {{this.author}}</h4>
-                <video id={{this.id}} class="video-js vjs-default-skin" preload="none" crossorigin="true" controls
-                    style="object-fit: contain; width: 100%; height: 15vw; margin-bottom: 10px;">
-                    <!--class="video-js vjs-default-skin" preload="auto" crossorigin="true" controls width="640"
-          height="268" controls-->
-                </video>
-                <!--<source type="application/x-mpegURL">-->
-
-                <button type="button" class="btn btn-secondary" onclick="createIt('{{this.id}}', '{{this.url}}')"
-                    style="margin-left: auto; margin-right: auto;">Play video</button>
-
-
-
-
-                <!--<button id="thebuts" onclick="createIt('{{this.id}}', '{{this.url}}')">pinch me</button>-->
-                <!--<video src={{this.url}} autoplay muted></video>-->
-                <p class="card-text" style="margin-top: 10px; text-align: center; font-family: 'Asap', sans-serif;">
-                    {{this.description}}</p>
-            </div>
-        </div>
-
-        {{/ifEquals}}
-        <!--<button type="button" onclick="playIt()" class="btn btn-primary">Primary</button>-->
-        {{/ifEquals}}
-        {{/each}}
     </div>
     <!--</div>-->
 

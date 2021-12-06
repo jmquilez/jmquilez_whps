@@ -17,6 +17,7 @@ const Users = require('../models/email');
 const nodemailer = require('nodemailer');
 const LocalStrategy = require('passport-local').Strategy
 const customStrat = require('passport-custom').Strategy;
+const postCtrl = require('../controllers/post');
 
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
@@ -298,10 +299,10 @@ router.post('/postefile', multer.single('filename'), (req, res, next) => {
                 `https://storage.googleapis.com/${bucket.name}/${blob.name}`
             );
             console.log(publicUrl);
-            req.flash('signinproperly', `Uploading video, Mr/Mrs ${req.body.mail}. We hope you enjoy it ☄️☄️☄️.`)
+            req.flash('signinproperly', `Uploading video, Mr/Mrs ${req.se}. We hope you enjoy it ☄️☄️☄️.`)
             res.redirect('/perfil');
             //res.status(200).send(publicUrl);
-            console.log("file uploaded: ", publicUrl);
+            console.log("file uploaded:", publicUrl);
         });
 
         blobStream.end(req.file.buffer);
@@ -368,7 +369,10 @@ router.get('/', (req, res) => {
                     description: document.description,
                     likes: document.likes,
                     __v: document.__v,
-                    isHLSCoded: document.isHLSCoded
+                    isHLSCoded: document.isHLSCoded,
+                    thumbURL: document.thumbURL,
+                    text_size: document.text_size,
+                    author_size: document.author_size,
                 }
             })
         }
@@ -536,6 +540,9 @@ router.get('/perfil', isAuth, (req, res, next) => {
                     likes: document.likes,
                     __v: document.__v,
                     isHLSCoded: document.isHLSCoded,
+                    thumbURL: document.thumbURL,
+                    text_size: document.text_size,
+                    author_size: document.author_size,
                 }
             })
         }
@@ -544,10 +551,13 @@ router.get('/perfil', isAuth, (req, res, next) => {
             name: req.session.user,
             email: req.session.email,
             postal: context.usersDocuments,
+            style: 'profile.css',
         });
     })
 
 });
+
+router.get('/posts/:post_id', postCtrl.index);
 
 
 router.get('/dashboard', isAuth, (req, res, next) => {
@@ -569,17 +579,45 @@ router.get('/dashboard', isAuth, (req, res, next) => {
 router.post('/postafile', multer.single('filename'), (req, res, next) => {
     passport.authenticate('postafile', function(err, user, info) {
         if (user.filetype == 'video' && user.isHLSCoded == true) {
-            const blob = bucket.file(`${user.id}/${user.id}0.ts`);
+            /*const blob = bucket.file(`${user.id}/${user.id}0.ts`);
             const blobStr = blob.createWriteStream();
             blobStr.on('error', err => {
                 next(err);
             });
-            console.log('bucketfile', blob);
+            console.log('bucketfile', blob);*/
             fspromises.mkdir(path.resolve(__dirname, `../cart/${user.id}`)).then(() => {
                 fspromises.writeFile(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), req.file.buffer, () => {
                     console.log('video downloaded')
                 }).then(() => {
-                    const readStream = fs.createReadStream(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`));
+                    var shot = new ffmpeg(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`))
+                        .takeScreenshots({
+                            count: 1,
+                            timemarks: ['0'],
+                            filename: user.id,
+                        }, path.resolve(__dirname, `../cart/content/${user.id}`), function(err) {
+                            console.log('errorizing');
+                            console.error(err)
+                        })
+                        .on('end', () => {
+                            console.log('No_HLS Thumbnail properly saved');
+                            bucket.upload(path.resolve(__dirname, `../cart/content/${user.id}/${user.id}.png`), {
+                                    destination: `Yes_HLS/${user.id}/${user.id}thumb`,
+                                }).then(() => {
+                                    console.log(`${user.id} thumbnail uploaded to ${bucket.name}.`);
+                                    console.log('path: ' + `https://storage.googleapis.com/${bucket.name}/Yes_HLS/${user.id}/${user.id}thumb`)
+                                    rimraf(path.resolve(__dirname, `../cart/content/${user.id}`), function() {
+                                        console.log("removedYEShlsdir");
+                                    });
+                                    //req.flash('signinproperly', `Uploading media, Mr/Mrs ${req.body.mail}. Check your email to verify changes ☄️☄️☄️.`)
+                                    //done((null, true, req.flash('signinproperly', `Uploading media, Mr/Mrs ${req.body.mail}. Check your email to verify changes ☄️☄️☄️.`)));
+                                })
+                                .catch((err) => {
+                                    console.error('ERROR:', err);
+                                });
+
+                        })
+                        //const readStream = fs.createReadStream(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`));
+
                     ffmpeg( /*readStream*/ path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), { timeout: 43200 }).addOptions([
                             '-profile:v baseline',
                             '-level 3.0',
@@ -591,7 +629,7 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                         .on('start', (commandLins) => {
                             console.log('just started')
                             console.log(commandLins);
-                            req.flash('signinproperly', `Uploading video, Mr/Mrs ${req.body.mail}. We hope you enjoy it ☄️☄️☄️.`)
+                            req.flash('signinproperly', `Uploading HLS video, Mr/Mrs ${req.session.user_name}. We hope you enjoy it ☄️☄️☄️.`)
                             res.redirect('/perfil');
                         })
                         .on('progress', (progress) => {
@@ -611,7 +649,7 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                                         console.log('fileando')
                                         console.log(file)
                                         bucket.upload(path.resolve(__dirname, `../cart/${user.id}/${file}`), {
-                                                destination: `${user.id}/` + file,
+                                                destination: `Yes_HLS/${user.id}/` + file,
                                             }).then(() => {
                                                 console.log(`${file} uploaded to ${bucket.name}.`);
                                                 //req.flash('signinproperly', `Uploading media, Mr/Mrs ${req.body.mail}. Check your email to verify changes ☄️☄️☄️.`)
@@ -631,7 +669,7 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                                     console.log("Directory deleted successfully")
                                 })*/
                             rimraf(path.resolve(__dirname, `../cart/${user.id}`), function() {
-                                console.log("removedhlsdir");
+                                console.log("removedYEShlsdir");
                             });
                             fs.unlink(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), (err) => {
                                 if (err) {
@@ -728,7 +766,8 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
                 });
             });*/
 
-        } else if (user.filetype = 'image' || user.isHLSCoded == false) {
+        } else if (user.filetype == 'image') {
+            console.log('Image media')
             console.log(req.file)
             if (!req.file) {
                 res.status(400).send('No file uploaded.');
@@ -738,7 +777,7 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
             //const userId = req.user._id
 
             // Create a new blob in the bucket and upload the file data.
-            const blob = bucket.file(user.id);
+            const blob = bucket.file(`Images/${user.id}`);
 
             const blobStream = blob.createWriteStream();
 
@@ -749,13 +788,97 @@ router.post('/postafile', multer.single('filename'), (req, res, next) => {
             blobStream.on('finish', () => {
                 // The public URL can be used to directly access the file via HTTP.
                 const publicUrl = format(
+                    `https://storage.googleapis.com/Images/${bucket.name}/${blob.name}`
+                );
+                console.log(publicUrl);
+                req.flash('signinproperly', `Uploading image, Mr/Mrs ${req.session.user_name}. We hope you enjoy it ☄️☄️☄️.`)
+                res.redirect('/perfil');
+                //res.status(200).send(publicUrl);
+                console.log("file uploaded:", publicUrl);
+            });
+
+            blobStream.end(req.file.buffer);
+        } else if (user.isHLSCoded == false && user.filetype == 'video') {
+            console.log('No HLS video');
+            console.log(req.file)
+            if (!req.file) {
+                res.status(400).send('No file uploaded.');
+                return;
+            }
+
+            //write file to temp dir
+
+            fspromises.writeFile(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), req.file.buffer, () => {
+                console.log('video downloaded')
+            }).then(() => {
+                var shot = new ffmpeg(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`))
+                    .takeScreenshots({
+                        count: 1,
+                        timemarks: ['0'],
+                        filename: user.id,
+                    }, path.resolve(__dirname, `../cart/content/${user.id}`), function(err) {
+                        console.log('errorizing');
+                        console.error(err)
+                    })
+                    .on('end', () => {
+                        console.log('No_HLS Thumbnail properly saved');
+                        bucket.upload(path.resolve(__dirname, `../cart/content/${user.id}/${user.id}.png`), {
+                                destination: `No_HLS/${user.id}/${user.id}thumb`,
+                            }).then(() => {
+                                console.log(`${user.id} thumbnail uploaded to ${bucket.name}.`);
+                                console.log('path: ' + `https://storage.googleapis.com/${bucket.name}/No_HLS/${user.id}/${user.id}thumb`)
+                                rimraf(path.resolve(__dirname, `../cart/content/${user.id}`), function() {
+                                    console.log("removedNOhlsdir");
+                                });
+                                //req.flash('signinproperly', `Uploading media, Mr/Mrs ${req.body.mail}. Check your email to verify changes ☄️☄️☄️.`)
+                                //done((null, true, req.flash('signinproperly', `Uploading media, Mr/Mrs ${req.body.mail}. Check your email to verify changes ☄️☄️☄️.`)));
+                            })
+                            .catch((err) => {
+                                console.error('ERROR:', err);
+                            });
+
+                    })
+            })
+
+
+
+
+
+            //poster
+
+
+            //const userId = req.user._id
+
+            // Create a new blob in the bucket and upload the file data.
+
+            const blob = bucket.file(`No_HLS/${user.id}/${user.id}`);
+
+            const blobStream = blob.createWriteStream();
+
+            blobStream.on('error', err => {
+                console.log("blobstreamerror");
+                console.error(err);
+                next(err);
+            });
+
+            blobStream.on('finish', () => {
+                // The public URL can be used to directly access the file via HTTP.
+                const publicUrl = format(
                     `https://storage.googleapis.com/${bucket.name}/${blob.name}`
                 );
                 console.log(publicUrl);
-                req.flash('signinproperly', `Uploading image, Mr/Mrs ${req.body.mail}. We hope you enjoy it ☄️☄️☄️.`)
+                req.flash('signinproperly', `Uploading video, Mr/Mrs ${req.session.user_name}. We hope you enjoy it ☄️☄️☄️.`)
                 res.redirect('/perfil');
                 //res.status(200).send(publicUrl);
-                console.log("file uploaded: ", publicUrl);
+                console.log("file uploaded:", publicUrl);
+
+                fs.unlink(path.resolve(__dirname, `../videos/${user.id}.${user.extension}`), (err) => {
+                    if (err) {
+                        return console.log("error occurred in deleting directory", err);
+                    }
+
+                    console.log("removed temporary video file successfully")
+                })
             });
 
             blobStream.end(req.file.buffer);

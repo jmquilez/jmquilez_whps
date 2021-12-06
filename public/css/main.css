@@ -1,147 +1,155 @@
-/*@import url('https://fonts.googleapis.com/css2?family=Exo+2&display=swap');*/
-
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Architects+Daughter&family=Asap&family=Balsamiq+Sans&family=Cairo:wght@300&family=Comfortaa&family=Lobster&family=Outfit:wght@700&family=Patrick+Hand&family=Praise&family=Smooch&family=Varela+Round&display=swap');
-#form5Example21,
-#form5Example22,
-#form5Exampls23,
-#form5Exampls24,
-#form5Exampls25,
-#form5Exampls26,
-#form5Exampls27 {
-    color: rgb(74, 241, 82);
-    font-family: 'Patrick Hand', cursive;
-    background-color: transparent;
-}
-
-#form5Example21:hover::-webkit-input-placeholder,
-#form5Example22:hover::-webkit-input-placeholder,
-#form5Exampls23:hover::-webkit-input-placeholder,
-#form5Exampls24:hover::-webkit-input-placeholder,
-#form5Exampls25:hover::-webkit-input-placeholder,
-#form5Exampls26:hover::-webkit-input-placeholder,
-#form5Exampls27:hover::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    /*font-family: 'Exo 2', sans-serif;*/
-    font-family: 'Patrick Hand', cursive;
-    color: white
-}
-
-#form5Example21::-webkit-input-placeholder,
-#form5Example22::-webkit-input-placeholder,
-#form5Exampls23::-webkit-input-placeholder,
-#form5Exampls24::-webkit-input-placeholder,
-#form5Exampls25::-webkit-input-placeholder,
-#form5Exampls26::-webkit-input-placeholder,
-#form5Exampls27::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    /*font-family: 'Exo 2', sans-serif;*/
-    font-family: 'Patrick Hand', cursive;
-    color: rgb(74, 241, 82);
-}
-
-#form5Example21:hover,
-#form5Example22:hover,
-#form5Exampls23:hover,
-#form5Exampls24:hover,
-#form5Exampls25:hover,
-#form5Exampls26:hover,
-#form5Exampls27:hover {
-    font-family: 'Patrick Hand', cursive;
-    background-color: rgb(125, 250, 131);
-    color: white;
-}
-
-#form5Exampls26::after {
-    color: black;
-}
-
-#form5Example21:-webkit-autofill,
-#form5Example22:-webkit-autofill,
-#form5Exampls23:-webkit-autofill,
-#form5Exampls24:-webkit-autofill,
-#form5Exampls25:-webkit-autofill,
-#form5Exampls26:-webkit-autofill,
-#form5Exampls27:-webkit-autofill {
-    background-color: transparent !important;
-    color: rgb(125, 250, 131) !important;
-    font-family: 'Patrick Hand', cursive;
-    border-radius: 20px;
-    /*transition-property: color;*/
-    /*transition: background-color 5000s ease-in-out 0s;*/
-    transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-family 5000s ease-in-out 0s, border-radius 5000s ease-in-out 0s;
-}
-
-#form5Example21:-webkit-autofill:hover,
-#form5Example21:-webkit-autofill:focus,
-#form5Example21:-webkit-autofill:active,
-#form5Example21:-webkit-autofill::after,
-#form5Example22:-webkit-autofill:hover,
-#form5Example22:-webkit-autofill:focus,
-#form5Example22:-webkit-autofill:active,
-#form5Example22:-webkit-autofill::after,
-#form5Exampls23:-webkit-autofill:hover,
-#form5Exampls23:-webkit-autofill:focus,
-#form5Exampls23:-webkit-autofill:active,
-#form5Exampls23:-webkit-autofill::after,
-#form5Exampls24:-webkit-autofill:hover,
-#form5Exampls24:-webkit-autofill:focus,
-#form5Exampls24:-webkit-autofill:active,
-#form5Exampls24:-webkit-autofill::after,
-#form5Exampls25:-webkit-autofill:hover,
-#form5Exampls25:-webkit-autofill:focus,
-#form5Exampls25:-webkit-autofill:active,
-#form5Exampls25:-webkit-autofill::after,
-#form5Exampls26:-webkit-autofill:hover,
-#form5Exampls26:-webkit-autofill:focus,
-#form5Exampls26:-webkit-autofill:active,
-#form5Exampls26:-webkit-autofill::after,
-#form5Exampls27:-webkit-autofill:hover,
-#form5Exampls27:-webkit-autofill:focus,
-#form5Exampls27:-webkit-autofill:active,
-#form5Exampls27:-webkit-autofill::after {
-    background-color: transparent;
-    font-family: 'Patrick Hand', cursive;
-    color: rgb(125, 250, 131) !important;
-    border-radius: 20px;
-    /*transition-property: all;*/
-    transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-family 5000s ease-in-out 0s, border-radius 5000s ease-in-out 0s;
-    /*transition: color 5000s ease-in-out 0s;*/
-    /*background-color: transparent !important;
+    /*@import url('https://fonts.googleapis.com/css2?family=Exo+2&display=swap');*/
+    
+    @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Architects+Daughter&family=Asap&family=Balsamiq+Sans&family=Cairo:wght@300&family=Comfortaa&family=Lobster&family=Outfit:wght@700&family=Patrick+Hand&family=Praise&family=Smooch&family=Varela+Round&display=swap');
+    body {
+        display: block;
+    }
+    
+    #form5Example21,
+    #form5Example22,
+    #form5Exampls23,
+    #form5Exampls24,
+    #form5Exampls25,
+    #form5Exampls26,
+    #form5Exampls27 {
+        color: rgb(74, 241, 82);
+        font-family: 'Patrick Hand', cursive;
+        background-color: transparent;
+    }
+    
+    #form5Example21:hover::-webkit-input-placeholder,
+    #form5Example22:hover::-webkit-input-placeholder,
+    #form5Exampls23:hover::-webkit-input-placeholder,
+    #form5Exampls24:hover::-webkit-input-placeholder,
+    #form5Exampls25:hover::-webkit-input-placeholder,
+    #form5Exampls26:hover::-webkit-input-placeholder,
+    #form5Exampls27:hover::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        /*font-family: 'Exo 2', sans-serif;*/
+        font-family: 'Patrick Hand', cursive;
+        color: white
+    }
+    
+    #form5Example21::-webkit-input-placeholder,
+    #form5Example22::-webkit-input-placeholder,
+    #form5Exampls23::-webkit-input-placeholder,
+    #form5Exampls24::-webkit-input-placeholder,
+    #form5Exampls25::-webkit-input-placeholder,
+    #form5Exampls26::-webkit-input-placeholder,
+    #form5Exampls27::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        /*font-family: 'Exo 2', sans-serif;*/
+        font-family: 'Patrick Hand', cursive;
+        color: rgb(74, 241, 82);
+    }
+    
+    #form5Example21:hover,
+    #form5Example22:hover,
+    #form5Exampls23:hover,
+    #form5Exampls24:hover,
+    #form5Exampls25:hover,
+    #form5Exampls26:hover,
+    #form5Exampls27:hover {
+        font-family: 'Patrick Hand', cursive;
+        background-color: rgb(125, 250, 131);
+        color: white;
+    }
+    
+    #form5Exampls26::after {
+        color: black;
+    }
+    
+    video::-webkit-media-controls-panel {
+        background-image: none !important;
+        filter: brightness(0.4);
+    }
+    
+    #form5Example21:-webkit-autofill,
+    #form5Example22:-webkit-autofill,
+    #form5Exampls23:-webkit-autofill,
+    #form5Exampls24:-webkit-autofill,
+    #form5Exampls25:-webkit-autofill,
+    #form5Exampls26:-webkit-autofill,
+    #form5Exampls27:-webkit-autofill {
+        background-color: transparent !important;
+        color: rgb(125, 250, 131) !important;
+        font-family: 'Patrick Hand', cursive;
+        border-radius: 20px;
+        /*transition-property: color;*/
+        /*transition: background-color 5000s ease-in-out 0s;*/
+        transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-family 5000s ease-in-out 0s, border-radius 5000s ease-in-out 0s;
+    }
+    
+    #form5Example21:-webkit-autofill:hover,
+    #form5Example21:-webkit-autofill:focus,
+    #form5Example21:-webkit-autofill:active,
+    #form5Example22:-webkit-autofill:hover,
+    #form5Example22:-webkit-autofill:focus,
+    #form5Example22:-webkit-autofill:active,
+    #form5Exampls23:-webkit-autofill:hover,
+    #form5Exampls23:-webkit-autofill:focus,
+    #form5Exampls23:-webkit-autofill:active,
+    #form5Exampls24:-webkit-autofill:hover,
+    #form5Exampls24:-webkit-autofill:focus,
+    #form5Exampls24:-webkit-autofill:active,
+    #form5Exampls25:-webkit-autofill:hover,
+    #form5Exampls25:-webkit-autofill:focus,
+    #form5Exampls25:-webkit-autofill:active,
+    #form5Exampls26:-webkit-autofill:hover,
+    #form5Exampls26:-webkit-autofill:focus,
+    #form5Exampls26:-webkit-autofill:active,
+    #form5Exampls27:-webkit-autofill:hover,
+    #form5Exampls27:-webkit-autofill:focus,
+    #form5Exampls27:-webkit-autofill:active {
+        background-color: transparent;
+        font-family: 'Patrick Hand', cursive;
+        color: rgb(125, 250, 131) !important;
+        border-radius: 20px;
+        /*transition-property: all;*/
+        transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-family 0s ease-in-out 0s, border-radius 5000s ease-in-out 0s;
+        /*transition: color 5000s ease-in-out 0s;*/
+        /*background-color: transparent !important;
     color: red !important;*/
-    /*-webkit-box-shadow: 0 0 0 30px white inset !important;*/
-}
-
-#form5Exampls26:hover {
-    font-family: 'Patrick Hand', cursive !important;
-    background-color: rgb(125, 250, 131);
-    color: white;
-}
-
-#form5Exampls26::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    font-family: 'Exo 2', sans-serif;
-    color: rgb(74, 241, 82);
-}
-
-#form5Exampls26:hover::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    font-family: 'Exo 2', sans-serif;
-    color: white
-}
-
-#form5Exampls27:hover {
-    background-color: rgb(125, 250, 131);
-    color: white;
-}
-
-#form5Exampls27::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    font-family: 'Exo 2', sans-serif;
-    color: rgb(74, 241, 82);
-}
-
-#form5Exampls27:hover::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    font-family: 'Exo 2', sans-serif;
-    color: white
-}
+        /*-webkit-box-shadow: 0 0 0 30px white inset !important;*/
+    }
+    
+    #form5Exampls27:-webkit-autofill::after {
+        background-color: transparent imort !important;
+        color: transparent !important;
+        transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-family 0s ease-in-out 0s;
+    }
+    
+    #form5Exampls26:hover {
+        font-family: 'Patrick Hand', cursive !important;
+        background-color: rgb(125, 250, 131);
+        color: white;
+    }
+    
+    #form5Exampls26::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        font-family: 'Exo 2', sans-serif;
+        color: rgb(74, 241, 82);
+    }
+    
+    #form5Exampls26:hover::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        font-family: 'Exo 2', sans-serif;
+        color: white
+    }
+    
+    #form5Exampls27:hover {
+        background-color: rgb(125, 250, 131);
+        color: white;
+    }
+    
+    #form5Exampls27::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        font-family: 'Exo 2', sans-serif;
+        color: rgb(74, 241, 82);
+    }
+    
+    #form5Exampls27:hover::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        font-family: 'Exo 2', sans-serif;
+        color: white
+    }

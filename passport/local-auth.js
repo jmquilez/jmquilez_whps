@@ -79,19 +79,23 @@ passport.use('postafile', new customStrat(
             if (ext == '.jpeg' || ext == '.jpg' || ext == '.png' || ext == '.gif' || ext == '.tiff' || ext == '.psd' || ext == '.pdf') {
                 newPost.filetype = 'image';
                 newPost.extension = ext.substring(1, ext.length);
-                newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
+                newPost.url = `https://storage.googleapis.com/jmquilez/Images/${serp}`;
                 console.log(ext)
                 console.log('image');
             } else if (ext == '.mp4' || ext == '.avi' || ext == '.wmv' || ext == '.flv' || ext == '.mkv' || ext == '.f4v' || ext == '.avchd' || ext == '.swf' || ext == '.webm' || ext == '.mpeg-2') {
                 newPost.filetype = 'video';
                 newPost.extension = ext.substring(1, ext.length);
+
+
                 if (req.body.btncheck1) {
                     newPost.isHLSCoded = true
-                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}/${serp}.m3u8`;
+                    newPost.url = `https://storage.googleapis.com/jmquilez/Yes_HLS/${serp}/${serp}.m3u8`;
+                    newPost.thumbURL = `https://storage.googleapis.com/jmquilez/Yes_HLS/${serp}/${serp}thumb`;
                     console.log('checker: ', req.body.checkerboard);
                 } else {
                     newPost.isHLSCoded = false
-                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
+                    newPost.url = `https://storage.googleapis.com/jmquilez/No_HLS/${serp}/${serp}`;
+                    newPost.thumbURL = `https://storage.googleapis.com/jmquilez/No_HLS/${serp}/${serp}thumb`;
                     console.log('checker: ', req.body.checkerboard);
                 }
                 console.log(ext)
@@ -101,11 +105,13 @@ passport.use('postafile', new customStrat(
                 newPost.extension = 'mp4';
                 if (req.body.btncheck1) {
                     newPost.isHLSCoded = true
-                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}/${serp}.m3u8`;
+                    newPost.url = `https://storage.googleapis.com/jmquilez/Yes_HLS/${serp}/${serp}.m3u8`;
+                    newPost.thumbURL = `https://storage.googleapis.com/jmquilez/Yes_HLS/${serp}/${serp}thumb`;
                     console.log('checker: ', req.body.checkerboard);
                 } else {
                     newPost.isHLSCoded = false
-                    newPost.url = `https://storage.googleapis.com/jmquilez/${serp}`;
+                    newPost.url = `https://storage.googleapis.com/jmquilez/No_HLS/${serp}/${serp}`;
+                    newPost.thumbURL = `https://storage.googleapis.com/jmquilez/No_HLS/${serp}/${serp}thumb`;
                     console.log('checker: ', req.body.checkerboard);
                 }
                 console.log("nope")
@@ -116,11 +122,26 @@ passport.use('postafile', new customStrat(
             }
 
             //newPost.extension = ext.substring(1, ext.length);
+            var size = (100 / req.body.titl.length) * 3
+            if (size > 45) {
+                size = 45;
+            }
+
+            var author_size = (100 / (req.session.user_name.length + 3)) * 3;
+            if (author_size > 22.5) {
+                author_size = 22.5;
+            }
+
+            console.log("thesize: " + author_size)
+
             newPost.author = req.session.user_name;
             newPost.date = Date();
             newPost.id = serp;
-
             newPost.title = req.body.titl;
+            newPost.text_size = size.toString() + 'px';
+            newPost.author_size = author_size.toString() + 'px';
+            newPost.text_size_part = (size * 2).toString() + 'px';
+            newPost.author_size_part = (author_size * 2).toString() + 'px';
             newPost.description = req.body.descr;
             newPost.likes = 0;
             console.log('iscoded', newPost.isHLSCoded)
